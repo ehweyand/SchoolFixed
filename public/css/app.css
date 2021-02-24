@@ -1,0 +1,17 @@
+body,
+td,
+th {
+    font-family: 'Roboto', sans-serif
+}
+
+.valign {
+    display: flex;
+    align-items: center
+}
+
+.responsive {
+    max-width: 100%;
+    height: auto;
+}
+
+.image_inicial {}
