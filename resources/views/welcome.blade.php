@@ -11,7 +11,7 @@
 </head>
 <body>
     <div class="image_inicial">
-
+        <h1>Hello SchooolFixed</h1>
     </div>
 </body>
 </html>
