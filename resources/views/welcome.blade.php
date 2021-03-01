@@ -7,11 +7,37 @@
     <link rel="stylesheet" href="{{ asset('css/normaliza.css') }}">
     <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/responsivel.css') }}">
     <title>SchoolFixed</title>
 </head>
 <body>
-    <div class="image_inicial">
-        <h1>Hello SchooolFixed</h1>
+    <div class="img_inicial">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                   <div class="login-central">
+                        <div class="login">
+                            <div class="login_titulo">
+                                <p>SchoolFixed</p>
+                            </div>
+                            <form class="login_componentes" action={{ route('login') }} method="post">
+                                @csrf
+                                <p>Email:</p>
+                                <input type="email" name="email" id="" placeholder="Email">
+                                <p>Senha</p>
+                                <input type="password" name="senha" id="" placeholder="Senha">
+                            </form>
+                            <button type="submit" class="login_botao">Entrar</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
+    <footer>
+        <script src="/js/jquery.js"></script>
+    </footer>
 </body>
 </html>
+
