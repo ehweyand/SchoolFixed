@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="{{ asset('css/app.css') }}">
     <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
     <link rel="stylesheet" href="{{ asset('css/responsivel.css') }}">
-    <title>SchoolFixed</title>
+    <title>SchoolFixed - Login</title>
 </head>
 <body>
     <div class="img_inicial">
@@ -21,14 +21,15 @@
                             <div class="login_titulo">
                                 <p>SchoolFixed</p>
                             </div>
-                            <form class="login_componentes" action={{ route('login') }} method="post">
+                            <form class="login_componentes" action={{ route('site.login') }} method="post">
                                 @csrf
                                 <p>Email:</p>
-                                <input type="email" name="email" id="" placeholder="Email">
+                                <input type="email" name="email" placeholder="Email">
                                 <p>Senha</p>
-                                <input type="password" name="senha" id="" placeholder="Senha">
+                                <input type="password" name="senha" placeholder="Senha">
+                                <button type="submit" class="login_botao">Entrar</button>
                             </form>
-                            <button type="submit" class="login_botao">Entrar</button>
+                            
                         </div>
                     </div>
                 </div>

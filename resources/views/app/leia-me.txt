@@ -1,0 +1,3 @@
+Views "protegidas" da aplicação
+
+Consiste em cruds e visualizações de funções principais do sistema

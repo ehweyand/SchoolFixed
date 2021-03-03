@@ -1,0 +1,6 @@
+views que pertencem à uma visualização pública - futuro módulo de visita para novos clientes (OPCIONAL POR HORA)
+
+Exemplos:
+- contato.blade.php
+- landing.blade.php
+- sobre-nos.blade.php

@@ -14,8 +14,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('site.login');
 });
-Route::get('/login/{erro?}', 'LoginController@index')->name('login');
 
-Route::post('/login', 'LoginController@autenticar')->name('login');
+Route::get('/login/{erro?}', 'LoginController@index')->name('site.login');
+
+Route::post('/login', 'LoginController@autenticar')->name('site.login');

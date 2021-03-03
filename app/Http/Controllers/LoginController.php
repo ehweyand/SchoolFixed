@@ -5,11 +5,26 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 
-class LoginController extends Controller
-{
-    public function autenticar(Request $request)
-    {
-        echo "cheguei";
+class LoginController extends Controller {
+
+    public function index(Request $request) {
+        $erro = '';
+        //Recupera atributo do request, que poderia ser enviado tanto por post ou get
+        if ($request->get('erro') == 1) {
+            $erro = 'Usuário ou senha não existem';
+        }
+
+        if ($request->get('erro') == 2) {
+            $erro = 'Necessário realizar o login para ter acesso a página.';
+        }
+
+        return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
+    }
+
+
+
+
+    public function autenticar(Request $request) {
         //Regras de validação
         $regras = [
             'usuario' => 'email',
@@ -29,7 +44,7 @@ class LoginController extends Controller
         $senha = $request->get('senha');
 
         $user = new User();
-        $existe = $user->where('email', $email)->where('password', $senha)->get();
+        $existe = $user->where('email', $email)->where('senha', $senha)->get();
         $usuario = $existe->first();
 
         $usuario = $existe->first();
@@ -39,8 +54,7 @@ class LoginController extends Controller
             $_SESSION['nome'] = $usuario->nome;
             $_SESSION['email'] = $usuario->email;
 
-            echo "logou";
-
+            return 'Logamos!';
         } else {
             return redirect()->route('site.login', ['erro' => 1]); // Utiliza o verbo get, envia param avisando que deu erro
         }
