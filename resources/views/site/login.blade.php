@@ -1,44 +1,52 @@
 <!DOCTYPE html>
-<html lang="br">
+<html>
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <link rel="stylesheet" href="{{ asset('css/normaliza.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/reset.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/app.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/bootstrap-grid.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/responsivel.css') }}">
-    <title>SchoolFixed - Login</title>
+    <title>Acessar o sistema</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ asset('css/login.css')}}">
 </head>
-<body>
-    <div class="img_inicial">
-        <div class="container">
-            <div class="row">
-                <div class="col-12">
-                   <div class="login-central">
-                        <div class="login">
-                            <div class="login_titulo">
-                                <p>SchoolFixed</p>
-                            </div>
-                            <form class="login_componentes" action={{ route('site.login') }} method="post">
-                                @csrf
-                                <p>Email:</p>
-                                <input type="email" name="email" placeholder="Email">
-                                <p>Senha</p>
-                                <input type="password" name="senha" placeholder="Senha">
-                                <button type="submit" class="login_botao">Entrar</button>
-                            </form>
-                            
-                        </div>
+
+<body style="background-color: #c9c547">
+    <div class="container">
+        <div class="row content">
+            <div class="col-md-6 mb-3">
+                <img src="{{ asset('img/logo_1.PNG') }}" class="img-fluid" alt="Logotipo do sistema SchoolFixed">
+            </div>
+            <div class="col-md-6">
+                <h3 class="signin-text mb-3">Entrar no sistema</h3>
+                <form action="{{ route('site.login') }}" method="post">
+                @csrf
+
+                    <div class="form-group">
+                        <label for="email">E-Mail:</label>
+                        <input type="email" name="email" class="form-control">
                     </div>
-                </div>
+
+                    <div class="form-group">
+                        <label for="senha">Senha:</label>
+                        <input type="password" name="senha" class="form-control">
+                    </div>
+
+                    {{-- <div class="form-group form-check">
+                        <input type="checkbox" name="checkbox" class="form-check-input" id="checkbox">
+                        <label class="form-check-label" for="checkbox">Lembrar-me</label>
+                    </div> --}}
+                    
+                    <button class="btn btn-class">Login</button>
+                    @if(isset($_GET['erro']) && $_GET['erro'] == 1)
+                        <p style="color: red">Insira as credenciais corretas</p>
+                    @endif
+                    <p></p>
+                </form>
             </div>
         </div>
     </div>
-    <footer>
-        <script src="/js/jquery.js"></script>
-    </footer>
-</body>
-</html>
 
+</body>
+
+</html>

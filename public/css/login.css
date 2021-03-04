@@ -1,0 +1,49 @@
+
+.content {
+    margin: 8%;
+    background-color: #ffffff;
+    padding: 4rem 1rem 4rem 1rem;
+    box-shadow: 0 0 5px 5px rgba(0, 0, 0, .05);
+}
+
+.signin-text {
+    font-style: normal;
+    font-weight: 600 !important;
+}
+
+.form-control {
+    display: block;
+    width: 100%;
+    font-size: 1rem;
+    font-weight: 400;
+    line-height: 1.5;
+    border-color: #000000 !important;
+    border-style: solid !important;
+    border-width: 0 0 1px 0 !important;
+    padding: 0px !important;
+    color: #495057;
+    height: auto;
+    border-radius: 0;
+    background-color: #ffffff;
+    background-clip: padding-box;
+}
+
+.form-control:focus {
+    color: #495057;
+    background-color: #ffffff;
+    border-color: #ffffff;
+    outline: 0;
+    box-shadow: none;
+}
+
+.btn-class {
+    background-color: #F1EC40;
+    border-color: #000000;
+    color: #000000;
+    font-weight: bold;
+}
+
+.btn-class:hover {
+    background-color: #000000;
+    color: #ffffff;
+}
