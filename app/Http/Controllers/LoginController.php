@@ -11,9 +11,10 @@ class LoginController extends Controller {
         $erro = '';
         //Recupera atributo do request, que poderia ser enviado tanto por post ou get
         if ($request->get('erro') == 1) {
-            $erro = 'Usuário ou senha não existem';
+            $erro = 'Usuário ou senha não existem!';
         }
 
+        //Usuário tenta acessar uma rota protegida direto no navegador
         if ($request->get('erro') == 2) {
             $erro = 'Necessário realizar o login para ter acesso a página.';
         }
@@ -27,18 +28,19 @@ class LoginController extends Controller {
     public function autenticar(Request $request) {
         //Regras de validação
         $regras = [
-            'usuario' => 'email',
+            'email' => 'email',
             'senha' => 'required'
         ];
 
         //As mensagens de feedback de validação
         $feedback = [
-            'usuario.email' => 'O campo usuário (e-mail) é obrigatório',
+            'email.email' => 'O campo usuário (e-mail) é obrigatório',
             'senha.required' => 'O campo senha é obrigatório.'
         ];
 
         //Se não passar pelo validate, é feito um redirect para a rota antiga.
         $request->validate($regras, $feedback);
+        // Se falhar no validate, ai sim o old('email') funcionará no form
 
         $email = $request->get('email');
         $senha = $request->get('senha');
@@ -57,6 +59,7 @@ class LoginController extends Controller {
             return 'Logamos!';
         } else {
             return redirect()->route('site.login', ['erro' => 1]); // Utiliza o verbo get, envia param avisando que deu erro
+
         }
     }
 }
