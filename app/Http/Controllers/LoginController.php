@@ -56,7 +56,7 @@ class LoginController extends Controller {
             $_SESSION['nome'] = $usuario->nome;
             $_SESSION['email'] = $usuario->email;
 
-            return 'Logamos!';
+            return redirect()->route('app.home');
         } else {
             return redirect()->route('site.login', ['erro' => 1]); // Utiliza o verbo get, envia param avisando que deu erro
 
