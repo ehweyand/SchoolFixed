@@ -93,8 +93,21 @@
 
     <!--========== CONTENTS ==========-->
     <main>
-        <section>
-        
+        <section class="container">
+            <div class="row justify-content-center">
+                <div class="col-8">
+                    <form action="" method="post">
+                        <div class="form-group">
+                            <label for="descricao">Descrição:</label>
+                            <textarea class="form-control" id="descricao" rows="3"></textarea>
+                        </div>
+
+                        <div class="form-group">
+                            <input type="submit" class="btn btn-primary" value="Cadastrar">
+                        </div>
+                    </form>
+                </div>
+            </div>
         </section>
     </main>
 
