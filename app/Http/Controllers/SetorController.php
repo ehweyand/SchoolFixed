@@ -5,16 +5,14 @@ namespace App\Http\Controllers;
 use App\Setor;
 use Illuminate\Http\Request;
 
-class SetorController extends Controller
-{
+class SetorController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        //
+    public function index() {
+        return view('app.setor.index');
     }
 
     /**
@@ -22,8 +20,7 @@ class SetorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -33,8 +30,7 @@ class SetorController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
     }
 
@@ -44,8 +40,7 @@ class SetorController extends Controller
      * @param  \App\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function show(Setor $setor)
-    {
+    public function show(Setor $setor) {
         //
     }
 
@@ -55,8 +50,7 @@ class SetorController extends Controller
      * @param  \App\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function edit(Setor $setor)
-    {
+    public function edit(Setor $setor) {
         //
     }
 
@@ -67,8 +61,7 @@ class SetorController extends Controller
      * @param  \App\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Setor $setor)
-    {
+    public function update(Request $request, Setor $setor) {
         //
     }
 
@@ -78,8 +71,7 @@ class SetorController extends Controller
      * @param  \App\Setor  $setor
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Setor $setor)
-    {
+    public function destroy(Setor $setor) {
         //
     }
 }

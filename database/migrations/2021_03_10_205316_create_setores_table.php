@@ -17,6 +17,7 @@ class CreateSetoresTable extends Migration
             $table->id();
             $table->string('descricao', 200);
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
