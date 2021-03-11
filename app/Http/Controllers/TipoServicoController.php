@@ -14,7 +14,10 @@ class TipoServicoController extends Controller
      */
     public function index()
     {
-        //
+        //        
+        $tipo_servicos = TipoServico::all();
+
+        return view('app.tipo_servico.index', ['tipo_servicos' => $tipo_servicos]);
     }
 
     /**
@@ -36,6 +39,17 @@ class TipoServicoController extends Controller
     public function store(Request $request)
     {
         //
+        $regras = [
+            'descricao' => 'required'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido'
+        ];
+
+        $request->validate($regras, $feedback);
+        TipoServico::create($request->all());
+        return redirect()->route('tipo_servico.index');
     }
 
     /**
@@ -57,7 +71,7 @@ class TipoServicoController extends Controller
      */
     public function edit(TipoServico $tipoServico)
     {
-        //
+        return view('app.tipo_servico.edit', ['tipo_servico' => $tipoServico]);
     }
 
     /**
@@ -69,7 +83,18 @@ class TipoServicoController extends Controller
      */
     public function update(Request $request, TipoServico $tipoServico)
     {
-        //
+        $regras = [
+            'descricao' => 'required'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $tipoServico->update($request->all());
+        return redirect()->route('tipo_servico.index');
     }
 
     /**
@@ -80,6 +105,7 @@ class TipoServicoController extends Controller
      */
     public function destroy(TipoServico $tipoServico)
     {
-        //
+        $tipoServico->delete();
+        return redirect()->route('tipo_servico.index');
     }
 }

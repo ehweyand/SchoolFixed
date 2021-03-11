@@ -53,7 +53,7 @@
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
                                     <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
-                                    <a href="#" class="nav__dropdown-item">Tipo de serviço</a>
+                                    <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
                                     <a href="#" class="nav__dropdown-item">PlaceHolder</a>
                                 </div>
                             </div>
