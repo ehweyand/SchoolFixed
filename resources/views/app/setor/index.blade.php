@@ -307,9 +307,9 @@
                 </div>
             </div>
 
-            <a href="#" class="nav__link nav__logout">
+            <a href="{{ route('app.sair') }}" class="nav__link nav__logout">
                 <i class='bx bx-log-out nav__icon'></i>
-                <span class="nav__name">Log Out</span>
+                <span class="nav__name">Sair</span>
             </a>
         </nav>
     </div>
@@ -344,13 +344,13 @@
 
                 <tr>
                     <td>{{$setor->descricao}}</td>
-                    <td><a href="{{ route('setor.edit', ['setor' => $setor->id])}}">Editar</a></td>
+                    <td><a class="green-text" href="{{ route('setor.edit', ['setor' => $setor->id])}}"><i class='bx bx-highlight nav__icon'></i> Editar</a></td>
 
                     <td>
                         <form id="form_{{$setor->id}}" method="post" action="{{ route('setor.destroy', ['setor' => $setor->id])}}">
                             @method('DELETE')
                             @csrf
-                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$setor->id}}').submit()"><i class='bx bx-highlight nav__icon'></i> Excluir</a>
+                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$setor->id}}').submit()"><i class='bx bx-trash-alt nav__icon'></i> Excluir</a>
                         </form>
                     </td>
                 </tr>

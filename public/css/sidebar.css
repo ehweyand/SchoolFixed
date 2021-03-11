@@ -80,7 +80,7 @@ img {
   display: flex;
   align-items: center;
   height: var(--header-height);
-  justify-content: space-between;
+  justify-content: flex-end;
 }
 
 .header__img {

@@ -79,9 +79,14 @@
 
         .col-25,
         .col-75,
-        input[type=submit] {
+        input[type=submit],
+        button.button-generic {
             width: 100%;
-            margin-top: 0;
+            margin-top: 8px;
+        }
+
+        .button-return {
+            margin: 0 !important;
         }
     }
 
@@ -216,6 +221,10 @@
         }
     }
 
+    .button-return {
+        margin-right: 15px;
+    }
+
     .red-text {
         color: red;
         font-weight: bold;
@@ -233,6 +242,12 @@
     td a:hover {
         text-decoration: underline;
     }
+
+    .centered {
+        display: flex;
+        justify-content: center;
+    }
+
 </style>
 
 <body>
@@ -307,29 +322,34 @@
                 </div>
             </div>
 
-            <a href="#" class="nav__link nav__logout">
+            <a href="{{ route('app.sair') }}" class="nav__link nav__logout">
                 <i class='bx bx-log-out nav__icon'></i>
-                <span class="nav__name">Log Out</span>
+                <span class="nav__name">Sair</span>
             </a>
         </nav>
     </div>
 
     <!--========== CONTENTS ==========-->
     <div class="container">
-        <form action="{{ route('setor.update') }}" method="post">
+        <form action="{{ route('setor.update', ['setor' => $setor->id]) }}" method="post">
             @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-25">
                     <label for="subject">Descrição do setor:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="descricao" name="descricao">
+                    <input type="text" id="descricao" name="descricao" value="{{ $setor->descricao ?? old('peso') }}">
+                    {{ $errors->has('descricao') ? $errors->first('descricao') : ''}}
                 </div>
             </div>
             <div class="row">
-                <input type="submit" class="button-generic" value="Cadastrar">
+                <input type="submit" class="button-generic" value="Confirmar">
             </div>
         </form>
+        <div class="row centered">
+            <button class="button-generic button-return" onclick="window.location='{{ url('app/setor') }}'">Voltar</button>
+        </div>
     </div>
     </div>
 

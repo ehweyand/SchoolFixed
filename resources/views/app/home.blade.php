@@ -84,9 +84,9 @@
                 </div>
             </div>
 
-            <a href="#" class="nav__link nav__logout">
+            <a href="{{ route('app.sair') }}" class="nav__link nav__logout">
                 <i class='bx bx-log-out nav__icon'></i>
-                <span class="nav__name">Log Out</span>
+                <span class="nav__name">Sair</span>
             </a>
         </nav>
     </div>
