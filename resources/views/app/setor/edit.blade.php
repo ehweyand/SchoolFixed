@@ -190,7 +190,7 @@
             border-bottom: 3px solid #ddd;
             display: block;
             margin-bottom: .625em;
-            
+
         }
 
         table td {
@@ -316,7 +316,7 @@
 
     <!--========== CONTENTS ==========-->
     <div class="container">
-        <form action="{{ route('setor.store') }}" method="post">
+        <form action="{{ route('setor.update') }}" method="post">
             @csrf
             <div class="row">
                 <div class="col-25">
@@ -331,35 +331,6 @@
             </div>
         </form>
     </div>
-    <div class="container">
-        <table>
-            <caption>Setores cadastrados</caption>
-            <thead>
-                <tr>
-                    <th scope="col" colspan="3">Descrição</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($setores as $setor)
-
-                <tr>
-                    <td>{{$setor->descricao}}</td>
-                    <td><a href="{{ route('setor.edit', ['setor' => $setor->id])}}">Editar</a></td>
-
-                    <td>
-                        <form id="form_{{$setor->id}}" method="post" action="{{ route('setor.destroy', ['setor' => $setor->id])}}">
-                            @method('DELETE')
-                            @csrf
-                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$setor->id}}').submit()"><i class='bx bx-highlight nav__icon'></i> Excluir</a>
-                        </form>
-                    </td>
-                </tr>
-
-                @endforeach
-            </tbody>
-        </table>
-
-
     </div>
 
     <!--========== SIDEBAR MAIN JS ==========-->

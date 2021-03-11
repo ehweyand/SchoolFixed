@@ -12,7 +12,10 @@ class SetorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function index() {
-        return view('app.setor.index');
+
+        $setores = Setor::all();
+
+        return view('app.setor.index', ['setores' => $setores]);
     }
 
     /**
@@ -31,7 +34,18 @@ class SetorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request) {
-        //
+        $regras = [
+            'descricao' => 'required'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido'
+        ];
+
+        $request->validate($regras, $feedback);
+        Setor::create($request->all());
+        return redirect()->route('setor.index');
+        
     }
 
     /**
@@ -51,7 +65,7 @@ class SetorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function edit(Setor $setor) {
-        //
+        return view('app.setor.edit', ['setor' => $setor]);
     }
 
     /**
@@ -62,7 +76,18 @@ class SetorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Setor $setor) {
-        //
+        $regras = [
+            'descricao' => 'required'
+        ];
+
+        $feedback = [
+            'required' => 'O campo :attribute deve ser preenchido'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        $setor->update($request->all());
+        return redirect()->route('setor.index');
     }
 
     /**
@@ -72,6 +97,8 @@ class SetorController extends Controller {
      * @return \Illuminate\Http\Response
      */
     public function destroy(Setor $setor) {
-        //
+        $setor->delete();
+        return redirect()->route('setor.index');
+
     }
 }
