@@ -44,6 +44,7 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
+        margin-top: 9px
     }
 
     /* Style the container */
@@ -81,7 +82,7 @@
         .col-75,
         input[type=submit] {
             width: 100%;
-            margin-top: 0;
+            margin-top: 7px;
         }
     }
 
@@ -190,7 +191,7 @@
             border-bottom: 3px solid #ddd;
             display: block;
             margin-bottom: .625em;
-            
+
         }
 
         table td {
