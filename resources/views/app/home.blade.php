@@ -10,6 +10,8 @@
     <!--========== CSS ==========-->
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
 
+    <link rel="icon" href="{{ asset('img/favicon.ico') }}">
+    
     <title>Sistema SchoolFixed</title>
 </head>
 <body>
