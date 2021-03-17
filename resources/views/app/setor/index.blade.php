@@ -279,7 +279,7 @@
                                 <div class="nav__dropdown-content">
                                     <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
                                     <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
-                                    <a href="#" class="nav__dropdown-item">PlaceHolder</a>
+                                    <a href="#" class="nav__dropdown-item">Usuário</a>
                                 </div>
                             </div>
                         </div>
@@ -325,7 +325,8 @@
                     <label for="subject">Descrição do setor:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="descricao" name="descricao">
+                    <input type="text" id="descricao" value="{{ $setor->descricao ?? old('descricao') }}" name="descricao">
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('descricao') ? $errors->first('descricao') : ''}}</p>
                 </div>
             </div>
             <div class="row">
