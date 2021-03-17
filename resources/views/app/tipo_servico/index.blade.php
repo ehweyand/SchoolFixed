@@ -14,7 +14,7 @@
 
 
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
-    
+
     <title>Sistema SchoolFixed</title>
 </head>
 
@@ -25,6 +25,7 @@
     textarea {
         width: 100%;
         padding: 12px;
+        border: 1px solid #ccc;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
@@ -46,6 +47,7 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
+        margin-top: 9px;
     }
 
     /* Style the container */
@@ -83,7 +85,7 @@
         .col-75,
         input[type=submit] {
             width: 100%;
-            margin-top: 0;
+            margin-top: 9px;
         }
     }
 
