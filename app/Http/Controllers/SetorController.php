@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Setor;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class SetorController extends Controller {
@@ -39,13 +40,21 @@ class SetorController extends Controller {
         ];
 
         $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido'
+            'required' => 'O campo descrição deve ser preenchido'
         ];
 
         $request->validate($regras, $feedback);
-        Setor::create($request->all());
+
+        //Transactions Control
+        DB::beginTransaction();
+        try {
+            Setor::create($request->all());
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
         return redirect()->route('setor.index');
-        
     }
 
     /**
@@ -81,12 +90,20 @@ class SetorController extends Controller {
         ];
 
         $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido'
+            'required' => 'O campo descrição deve ser preenchido'
         ];
 
         $request->validate($regras, $feedback);
 
-        $setor->update($request->all());
+        DB::beginTransaction();
+        try {
+            $setor->update($request->all());
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
+        
         return redirect()->route('setor.index');
     }
 
@@ -99,6 +116,5 @@ class SetorController extends Controller {
     public function destroy(Setor $setor) {
         $setor->delete();
         return redirect()->route('setor.index');
-
     }
 }

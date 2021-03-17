@@ -3,17 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\TipoServico;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
-class TipoServicoController extends Controller
-{
+class TipoServicoController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {
         //        
         $tipo_servicos = TipoServico::all();
 
@@ -25,8 +24,7 @@ class TipoServicoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
+    public function create() {
         //
     }
 
@@ -36,19 +34,27 @@ class TipoServicoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         //
         $regras = [
             'descricao' => 'required'
         ];
 
         $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido'
+            'required' => 'O campo descrição deve ser preenchido'
         ];
 
         $request->validate($regras, $feedback);
-        TipoServico::create($request->all());
+
+        DB::beginTransaction();
+        try {
+            TipoServico::create($request->all());
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
+
         return redirect()->route('tipo_servico.index');
     }
 
@@ -58,8 +64,7 @@ class TipoServicoController extends Controller
      * @param  \App\TipoServico  $tipoServico
      * @return \Illuminate\Http\Response
      */
-    public function show(TipoServico $tipoServico)
-    {
+    public function show(TipoServico $tipoServico) {
         //
     }
 
@@ -69,8 +74,7 @@ class TipoServicoController extends Controller
      * @param  \App\TipoServico  $tipoServico
      * @return \Illuminate\Http\Response
      */
-    public function edit(TipoServico $tipoServico)
-    {
+    public function edit(TipoServico $tipoServico) {
         return view('app.tipo_servico.edit', ['tipo_servico' => $tipoServico]);
     }
 
@@ -81,19 +85,25 @@ class TipoServicoController extends Controller
      * @param  \App\TipoServico  $tipoServico
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, TipoServico $tipoServico)
-    {
+    public function update(Request $request, TipoServico $tipoServico) {
         $regras = [
             'descricao' => 'required'
         ];
 
         $feedback = [
-            'required' => 'O campo :attribute deve ser preenchido'
+            'required' => 'O campo descrição deve ser preenchido'
         ];
 
         $request->validate($regras, $feedback);
 
-        $tipoServico->update($request->all());
+        DB::beginTransaction();
+        try {
+            $tipoServico->update($request->all());
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
         return redirect()->route('tipo_servico.index');
     }
 
@@ -103,8 +113,7 @@ class TipoServicoController extends Controller
      * @param  \App\TipoServico  $tipoServico
      * @return \Illuminate\Http\Response
      */
-    public function destroy(TipoServico $tipoServico)
-    {
+    public function destroy(TipoServico $tipoServico) {
         $tipoServico->delete();
         return redirect()->route('tipo_servico.index');
     }
