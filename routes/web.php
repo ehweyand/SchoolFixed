@@ -20,4 +20,6 @@ Route::prefix('/app')->group(function () {
     
     //Tipo de Serviço
     Route::resource('tipo_servico','TipoServicoController');
+    //Usuario
+    Route::resource('usuario', 'UsuarioController');
 });
