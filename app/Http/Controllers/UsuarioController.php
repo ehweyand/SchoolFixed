@@ -38,13 +38,16 @@ class UsuarioController extends Controller
         //
         $regras = [
             'nome' => 'required',
-            'email' => 'required',
+            'email' => 'email',
             'senha' => 'required',
             'permissao' =>  'required'
         ];
 
         $feedback = [
-            'required' => 'Todos os campos devem ser preenchido'
+            'nome.required' => 'O nome deve ser preenchido.',
+            'email.email' => 'O e-mail deve ser preenchido.',
+            'senha.required' => 'A senha deve ser preenchido.',
+            'permissao.required' => 'A permissão deve ser preenchido.'
         ];
 
         $request->validate($regras, $feedback);
