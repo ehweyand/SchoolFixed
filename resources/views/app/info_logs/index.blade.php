@@ -14,7 +14,6 @@
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
 
-
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
 
     <title>Sistema SchoolFixed</title>
@@ -48,6 +47,7 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
+        margin-top: 9px
     }
 
     /* Style the container */
@@ -83,14 +83,9 @@
 
         .col-25,
         .col-75,
-        input[type=submit],
-        button.button-generic {
+        input[type=submit] {
             width: 100%;
-            margin-top: 8px;
-        }
-
-        .button-return {
-            margin: 0 !important;
+            margin-top: 7px;
         }
     }
 
@@ -225,10 +220,6 @@
         }
     }
 
-    .button-return {
-        margin-right: 15px;
-    }
-
     .red-text {
         color: red;
         font-weight: bold;
@@ -247,9 +238,33 @@
         text-decoration: underline;
     }
 
-    .centered {
-        display: flex;
-        justify-content: center;
+    .btn {
+        font-family: arial;
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: 700;
+        border: none;
+        padding: 10px;
+        cursor: pointer;
+        display: inline-block;
+    }
+
+    .btn-green {
+        background: green;
+        color: #fff;
+        box-shadow: 0 5px 0 #006000;
+    }
+
+    .btn-green:hover {
+        background: #006000;
+        color: #fff;
+        box-shadow: 0 5px 0 #003f00;
+    }
+
+    .btn-green:active {
+        position: relative;
+        top: 5px;
+        box-shadow: none;
     }
 
 </style>
@@ -335,33 +350,25 @@
     </div>
 
     <!--========== CONTENTS ==========-->
-    <div class="container">
-        <form action="{{ route('tipo_servico.update', ['tipo_servico' => $tipo_servico->id]) }}" method="post">
-            @csrf
-            @method('PUT')
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Descrição do tipo de serviço:</label>
-                </div>
-                <div class="col-75">
-                    <input type="text" id="descricao" name="descricao"
-                        value="{{ $tipo_servico->descricao ?? old('descricao') }}">
-                    <p class="font-weight-bold text-danger mt-2">
-                        {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}</p>
-                </div>
-            </div>
-            <div class="row">
-                <input type="submit" class="button-generic" value="Confirmar">
-            </div>
-        </form>
+    <h1>Visualização de Logs do sistema</h1>
+    {{-- Alterar a data do arquivo de log desejado --}}
+    <form action="{{ route('app.logs') }}">
+        <input type="date" name="date" value="{{ $date ? $date->format('Y-m-d') : today()->format('Y-m-d') }}">
+        <button style="margin-left: 10px;" class="btn btn-green" type="submit">Buscar</button>
+    </form>
 
-        <div class="row centered">
-            <button class="button-generic button-return"
-                onclick="window.location='{{ url('app/tipo_servico') }}'">Voltar</button>
+    {{-- Visualizar o arquivo de Log e os seus conteúdos --}}
+    @if (empty($data['file']))
+        <div>
+            <h3 style="padding-top: 10px;">Nenhum Log foi encontrado.</h3>
         </div>
-    </div>
-    </div>
-
+    @else
+        <div>
+            <h5>Atualizado em: <b>{{ $data['lastModified']->format('d-m-Y h:i a') }}</b></h5>
+            <h5>Tamanho do arquivo: <b>{{ round($data['size'] / 1024) }} KB</b></h5>
+            <pre> {{ $data['file'] }}</pre>
+        </div>
+    @endif
     <!--========== SIDEBAR MAIN JS ==========-->
     <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>

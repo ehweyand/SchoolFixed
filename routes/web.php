@@ -22,4 +22,7 @@ Route::prefix('/app')->group(function () {
     Route::resource('tipo_servico','TipoServicoController');
     //Usuario
     Route::resource('usuario', 'UsuarioController');
+
+    //Logs
+    Route::get('/logs', 'LogsController@show')->name('app.logs');
 });
