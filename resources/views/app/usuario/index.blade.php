@@ -347,7 +347,7 @@
                     <label for="subject">Senha:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="senha"  name="senha">
+                    <input type="password" id="senha"  name="senha" style="width: 100%;padding: 12px;border: 1px solid #ccc;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;resize: vertical;">
                     {{-- Mensagem de aviso --}}
                     <p class="font-weight-bold text-danger mt-2">{{ $errors->has('senha') ? $errors->first('senha') : ''}}</p>
                 </div>
@@ -360,7 +360,7 @@
                     <select name="permissao">
                     <option value="1">Adminitrador</option>
                     <option value="2">Cliente</option>
-                    </select> 
+                    </select>
                     {{-- Mensagem de aviso --}}
                     <p class="font-weight-bold text-danger mt-2">{{ $errors->has('permissao') ? $errors->first('permissao') : ''}}</p>
                 </div>
