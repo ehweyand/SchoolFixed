@@ -6,6 +6,7 @@ use Illuminate\Support\Facades\Schema;
 
 class CreateEstadosTable extends Migration
 {
+
     /**
      * Run the migrations.
      *
@@ -13,16 +14,17 @@ class CreateEstadosTable extends Migration
      */
     public function up()
     {
-        Schema::create('estados', function (Blueprint $table) {
-            $table->id();
-            $table->string('descricao', 50);
-            $table->string('uf', 2);
-            $table->timestamps();
-            $table->unsignedBigInteger('pais_id');
 
-            //Constraints
-            $table->foreign('pais_id')->references('id')->on('paises');
+        Schema::create('states', function (Blueprint $table) {
+
+            $table->increments('id');
+            $table->string('name', 64)->unique();
+            $table->string('abbr', 2)->unique();
+            $table->timestamps();
+            $table->softDeletes();
+
         });
+
     }
 
     /**
@@ -32,6 +34,9 @@ class CreateEstadosTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('estados');
+
+        Schema::drop('states');
+
     }
 }
+
