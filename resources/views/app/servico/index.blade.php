@@ -294,13 +294,13 @@
                         <div class="nav__dropdown">
                             <a href="#" class="nav__link">
                                 <i class='bx bx-bell nav__icon'></i>
-                                <span class="nav__name">Item 1</span>
+                                <span class="nav__name">Relatórios</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="#" class="nav__dropdown-item">SubItem 1.1</a>
+                                    <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
@@ -321,49 +321,27 @@
 
     <!--========== CONTENTS ==========-->
     <div class="container">
-        <form action="{{ route('usuario.store') }}" method="post">
+        <form action="{{ route('servico.store') }}" method="post">
             @csrf
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">Nome:</label>
+                    <label for="subject">Descrição serviço:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="nome" name="nome">
+                    <input type="text" id="descricao" value="{{ $servico->descricao ?? old('descricao') }}" name="descricao">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('nome') ? $errors->first('nome') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('descricao') ? $errors->first('descricao') : ''}}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Email:</label>
-                </div>
                 <div class="col-75">
-                    <input type="text" id="email"  name="email">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('email') ? $errors->first('email') : ''}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Senha:</label>
-                </div>
-                <div class="col-75">
-                    <input type="password" id="senha"  name="senha" style="width: 100%;padding: 12px;border: 1px solid #ccc;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;resize: vertical;">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('senha') ? $errors->first('senha') : ''}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Permissão:</label>
-                </div>
-                <div class="col-75">
-                    <select name="permissao">
-                    <option value="1">Adminitrador</option>
-                    <option value="2">Cliente</option>
+                <select name="tipo_servico_id">
+                        <label for="subject">Tipo de Serviço:</label>
+                            @foreach($tipo_servicos as $key => $tipo_servico)
+                            <option value="{{$tipo_servico->id}}" {{ old ('tipo_serivos_id') == $tipo_servico->id ? 'selected' : '' }}>{{$tipo_servico->tipo_servico}}</option>
+                            @endforeach
                     </select>
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('permissao') ? $errors->first('permissao') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('tipo_servico_id') ? $errors->first('tipo_servico_id') : '' }}</p>
                 </div>
             </div>
             <div class="row">
@@ -373,30 +351,24 @@
     </div>
     <div class="container">
         <table>
-            <caption>Usuários cadastrados</caption>
+            <caption>Serviços cadastrados</caption>
             <thead>
                 <tr>
-                    <th scope="col" >Nome</th>
-                    <th scope="col" >Email</th>
-                    <th scope="col" >Permissão</th>
-                    <th></th>
-                    <th></th>
+                    <th scope="col" colspan="3">Descrição</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($usuarios as $usuario)
+                @foreach ($servicos as $servico)
 
                 <tr>
-                    <td>{{$usuario->nome}}</td>
-                    <td>{{$usuario->email}}</td>
-                    <td>{{$usuario->permissao}}</td>
-                    <td><a class="green-text" href="{{ route('usuario.edit', ['usuario' => $usuario->id])}}"><i class='bx bx-highlight nav__icon'></i> Editar</a></td>
+                    <td>{{$servico->descricao}}</td>
+                    <td><a class="green-text" href="{{ route('servico.edit', ['servico' => $servico->id])}}"><i class='bx bx-highlight nav__icon'></i> Editar</a></td>
 
                     <td>
-                        <form id="form_{{$usuario->id}}" method="post" action="{{ route('usuario.destroy', ['usuario' => $usuario->id])}}">
+                        <form id="form_{{$servico->id}}" method="post" action="{{ route('servico.destroy', ['servico' => $servico->id])}}">
                             @method('DELETE')
                             @csrf
-                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$usuario->id}}').submit()"><i class='bx bx-trash-alt nav__icon'></i> Excluir</a>
+                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$servico->id}}').submit()"><i class='bx bx-trash-alt nav__icon'></i> Excluir</a>
                         </form>
                     </td>
                 </tr>

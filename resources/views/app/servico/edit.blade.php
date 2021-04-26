@@ -26,7 +26,6 @@
         width: 100%;
         padding: 12px;
         border: 1px solid #ccc;
-        border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
         resize: vertical;
@@ -47,7 +46,6 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
-        margin-top: 9px;
     }
 
     /* Style the container */
@@ -83,9 +81,14 @@
 
         .col-25,
         .col-75,
-        input[type=submit] {
+        input[type=submit],
+        button.button-generic {
             width: 100%;
-            margin-top: 9px;
+            margin-top: 8px;
+        }
+
+        .button-return {
+            margin: 0 !important;
         }
     }
 
@@ -220,6 +223,10 @@
         }
     }
 
+    .button-return {
+        margin-right: 15px;
+    }
+
     .red-text {
         color: red;
         font-weight: bold;
@@ -237,6 +244,12 @@
     td a:hover {
         text-decoration: underline;
     }
+
+    .centered {
+        display: flex;
+        justify-content: center;
+    }
+
 </style>
 
 <body>
@@ -279,7 +292,7 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
+                                <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
                                     <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
                                     <a href="{{ route('servico.index')}}" class="nav__dropdown-item">Serviço</a>
                                     <a href="{{ route('usuario.index')}}" class="nav__dropdown-item">Usuário</a>
@@ -300,7 +313,7 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="#" class="nav__dropdown-item">SubItem 1.1</a>
+                                <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
@@ -321,91 +334,38 @@
 
     <!--========== CONTENTS ==========-->
     <div class="container">
-        <form action="{{ route('usuario.store') }}" method="post">
+        <form action="{{ route('servico.update', ['servico' => $servico->id]) }}" method="post">
             @csrf
+            @method('PUT')
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">Nome:</label>
+                    <label for="subject">Descrição serviço:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="nome" name="nome">
+                    <input type="text" id="descricao" value="{{ $servico->descricao ?? old('descricao') }}" name="descricao">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('nome') ? $errors->first('nome') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('descricao') ? $errors->first('descricao') : ''}}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Email:</label>
-                </div>
                 <div class="col-75">
-                    <input type="text" id="email"  name="email">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('email') ? $errors->first('email') : ''}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Senha:</label>
-                </div>
-                <div class="col-75">
-                    <input type="password" id="senha"  name="senha" style="width: 100%;padding: 12px;border: 1px solid #ccc;border: 1px solid #ccc;border-radius: 4px;box-sizing: border-box;resize: vertical;">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('senha') ? $errors->first('senha') : ''}}</p>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-25">
-                    <label for="subject">Permissão:</label>
-                </div>
-                <div class="col-75">
-                    <select name="permissao">
-                    <option value="1">Adminitrador</option>
-                    <option value="2">Cliente</option>
+                <select name="tipo_servico_id">
+                        <label for="subject">Tipo de Serviço:</label>
+                            @foreach($tipo_servicos as $key => $tipo_servico)
+                            <option value="{{$tipo_servico->id}}" {{ old ('tipo_serivos_id') == $tipo_servico->id ? 'selected' : '' }}>{{$tipo_servico->tipo_servico}}</option>
+                            @endforeach
                     </select>
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('permissao') ? $errors->first('permissao') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('tipo_servico_id') ? $errors->first('tipo_servico_id') : '' }}</p>
                 </div>
             </div>
             <div class="row">
-                <input type="submit" class="button-generic" value="Cadastrar">
+                <input type="submit" class="button-generic" value="Confirmar">
             </div>
         </form>
+        <div class="row centered">
+            <button class="button-generic button-return" onclick="window.location='{{ url('app/setor') }}'">Voltar</button>
+        </div>
     </div>
-    <div class="container">
-        <table>
-            <caption>Usuários cadastrados</caption>
-            <thead>
-                <tr>
-                    <th scope="col" >Nome</th>
-                    <th scope="col" >Email</th>
-                    <th scope="col" >Permissão</th>
-                    <th></th>
-                    <th></th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($usuarios as $usuario)
-
-                <tr>
-                    <td>{{$usuario->nome}}</td>
-                    <td>{{$usuario->email}}</td>
-                    <td>{{$usuario->permissao}}</td>
-                    <td><a class="green-text" href="{{ route('usuario.edit', ['usuario' => $usuario->id])}}"><i class='bx bx-highlight nav__icon'></i> Editar</a></td>
-
-                    <td>
-                        <form id="form_{{$usuario->id}}" method="post" action="{{ route('usuario.destroy', ['usuario' => $usuario->id])}}">
-                            @method('DELETE')
-                            @csrf
-                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$usuario->id}}').submit()"><i class='bx bx-trash-alt nav__icon'></i> Excluir</a>
-                        </form>
-                    </td>
-                </tr>
-
-                @endforeach
-            </tbody>
-        </table>
-
-
     </div>
 
     <!--========== SIDEBAR MAIN JS ==========-->
