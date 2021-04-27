@@ -77,7 +77,7 @@
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
                                     <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
-                                    <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
+                                    <a href="{{ route('app.audit')}}" class="nav__dropdown-item">Visualização da auditoria</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
                                 </div>
