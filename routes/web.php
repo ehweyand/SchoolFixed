@@ -28,4 +28,7 @@ Route::prefix('/app')->group(function () {
 
     //Logs
     Route::get('/logs', 'LogsController@show')->name('app.logs');
+
+    //Auditoria
+    Route::get('/audit', 'AuditController@show')->name('app.audit');
 });
