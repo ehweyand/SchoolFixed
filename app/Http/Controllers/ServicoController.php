@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Servico;
+use App\TipoServico;
 use Illuminate\Support\Facades\DB;
 
 
@@ -27,7 +28,9 @@ class ServicoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create() {
-        //
+        
+        $tipo_servicos = TipoServico::all();
+        return view ('app.tipo_servico.create', ['tipo_servicos' => $tipo_servicos]);
     }
 
     /**
