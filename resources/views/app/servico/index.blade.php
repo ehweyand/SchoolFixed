@@ -336,9 +336,13 @@
                 <div class="col-75">
                 <select name="tipo_servico_id">
                         <label for="subject">Tipo de Serviço:</label>
-                            @foreach($tipo_servicos as $tipo_servico)
-                            <option value="{{ old ('tipo_serivos_id') == $tipo_servico->id ? 'selected' : '' }}">{{$tipo_servico->descricao}}</option>
-                            @endforeach
+
+                        <option> -- Selecione o tipo de serviço --</option>
+
+                        @foreach ($tipo_servicos as $tipo_servico)
+                            <option value="{{ $tipo_servico->id}}">{{ $tipo_servico->descricao}}</option>
+                        @endforeach
+
                     </select>
                     {{-- Mensagem de aviso --}}
                     <p class="font-weight-bold text-danger mt-2">{{ $errors->has('tipo_servico_id') ? $errors->first('tipo_servico_id') : '' }}</p>

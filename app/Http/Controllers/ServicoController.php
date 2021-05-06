@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
+use Illuminate\Support\Facades\DB;
 use App\Servico;
 use App\TipoServico;
-use Illuminate\Support\Facades\DB;
-
 
 class ServicoController extends Controller
 {
@@ -31,6 +31,7 @@ class ServicoController extends Controller
         
         $tipo_servicos = TipoServico::all();
         return view ('app.servico.create', ['tipo_servicos' => $tipo_servicos]);
+
     }
 
     /**
