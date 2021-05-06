@@ -30,7 +30,7 @@ class ServicoController extends Controller
     public function create() {
         
         $tipo_servicos = TipoServico::all();
-        return view ('app.tipo_servico.create', ['tipo_servicos' => $tipo_servicos]);
+        return view ('app.servico.create', ['tipo_servicos' => $tipo_servicos]);
     }
 
     /**
