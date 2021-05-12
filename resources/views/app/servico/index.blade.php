@@ -335,15 +335,15 @@
             </div>
                 <div class="col-75">
                 <select name="tipo_servico_id">
-                        <label for="subject">Tipo de Serviço:</label>
+                    <label for="subject">Tipo de Serviço:</label>
 
-                        <option> -- Selecione o tipo de serviço --</option>
+                    <option> -- Selecione o tipo de serviço --</option>
 
-                        @foreach ($tipo_servicos as $tipo_servico)
-                            <option value="{{ $tipo_servico->id}}">{{ $tipo_servico->descricao}}</option>
-                        @endforeach
+                    @foreach ($tipo_servicos as $tipo_servico)
+                        <option value="{{ $tipo_servico->id}}">{{ $tipo_servico->descricao}}</option>
+                    @endforeach
 
-                    </select>
+                </select>
                     {{-- Mensagem de aviso --}}
                     <p class="font-weight-bold text-danger mt-2">{{ $errors->has('tipo_servico_id') ? $errors->first('tipo_servico_id') : '' }}</p>
                 </div>

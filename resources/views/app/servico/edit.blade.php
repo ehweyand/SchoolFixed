@@ -350,8 +350,8 @@
                 <div class="col-75">
                 <select name="tipo_servico_id">
                         <label for="subject">Tipo de Serviço:</label>
-                            @foreach($tipo_servicos as $key => $tipo_servico)
-                            <option value="{{$tipo_servico->id}}" {{ old ('tipo_serivos_id') == $tipo_servico->id ? 'selected' : '' }}>{{$tipo_servico->tipo_servico}}</option>
+                            @foreach($tipo_servicos as $tipo_servico)
+                            <option value="{{$tipo_servico->id}} " {{ ($servico->tipo_servico_id ?? old('tipo_servico_id')) == $tipo_servico->id ? 'selected' : ''}}>{{$tipo_servico->descricao}}</option>
                             @endforeach
                     </select>
                     {{-- Mensagem de aviso --}}
@@ -363,7 +363,7 @@
             </div>
         </form>
         <div class="row centered">
-            <button class="button-generic button-return" onclick="window.location='{{ url('app/setor') }}'">Voltar</button>
+            <button class="button-generic button-return" onclick="window.location='{{ url('app/servico') }}'">Voltar</button>
         </div>
     </div>
     </div>

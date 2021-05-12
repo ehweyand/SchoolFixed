@@ -18,8 +18,8 @@ class ServicoController extends Controller
     public function index() {
 
         $servicos = Servico::all();
-
-        return view('app.servico.index', ['servicos' => $servicos]);
+        $tipo_servicos = TipoServico::all();
+        return view('app.servico.index', ['servicos' => $servicos, 'tipo_servicos' => $tipo_servicos]);
     }
 
     /**
@@ -42,11 +42,13 @@ class ServicoController extends Controller
      */
     public function store(Request $request) {
         $regras = [
-            'descricao' => 'required'
+            'descricao' => 'required',
+            'tipo_servico_id' => 'exists:tipo_servicos,id'
         ];
 
         $feedback = [
-            'required' => 'O campo descrição deve ser preenchido'
+            'required' => 'O campo descrição deve ser preenchido',
+            'tipo_servico_id.exists' => 'O tipo de serviço não existe'
         ];
 
         $request->validate($regras, $feedback);
@@ -80,7 +82,8 @@ class ServicoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit(Servico $servico) {
-        return view('app.servico.edit', ['servico' => $servico]);
+        $tipo_servicos = TipoServico::all();
+        return view('app.servico.edit', ['servico' => $servico, 'tipo_servicos' => $tipo_servicos]);
     }
 
     /**
@@ -108,8 +111,7 @@ class ServicoController extends Controller
         } catch (\Exception $exception) {
             DB::rollBack();
         }
-
-        
+       
         return redirect()->route('servico.index');
     }
 
