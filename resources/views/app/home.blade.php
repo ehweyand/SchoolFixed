@@ -55,6 +55,7 @@
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
                                     <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
+                                    <a href="{{ route('funcionario.index')}}" class="nav__dropdown-item">Funcionário</a>
                                     <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
                                     <a href="{{ route('servico.index')}}" class="nav__dropdown-item">Serviço</a>
                                     <a href="{{ route('usuario.index')}}" class="nav__dropdown-item">Usuário</a>

@@ -18,6 +18,9 @@ Route::prefix('/app')->group(function () {
     // Setor
     Route::resource('setor','SetorController');
     
+    // Funcionario
+    Route::resource('funcionario','FuncionarioController');
+
     //Tipo de Serviço
     Route::resource('tipo_servico','TipoServicoController');
 

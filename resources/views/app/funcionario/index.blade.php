@@ -10,9 +10,7 @@
 
     <!--========== CSS ==========-->
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
 
 
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
@@ -27,6 +25,7 @@
     textarea {
         width: 100%;
         padding: 12px;
+        border: 1px solid #ccc;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
@@ -48,6 +47,7 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
+        margin-top: 9px;
     }
 
     /* Style the container */
@@ -83,14 +83,9 @@
 
         .col-25,
         .col-75,
-        input[type=submit],
-        button.button-generic {
+        input[type=submit] {
             width: 100%;
-            margin-top: 8px;
-        }
-
-        .button-return {
-            margin: 0 !important;
+            margin-top: 9px;
         }
     }
 
@@ -225,10 +220,6 @@
         }
     }
 
-    .button-return {
-        margin-right: 15px;
-    }
-
     .red-text {
         color: red;
         font-weight: bold;
@@ -246,12 +237,6 @@
     td a:hover {
         text-decoration: underline;
     }
-
-    .centered {
-        display: flex;
-        justify-content: center;
-    }
-
 </style>
 
 <body>
@@ -294,8 +279,8 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
-                                <a href="{{ route('funcionario.index')}}" class="nav__dropdown-item">Funcionário</a>
+                                    <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
+                                    <a href="{{ route('funcionario.index')}}" class="nav__dropdown-item">Funcionário</a>
                                     <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
                                     <a href="{{ route('servico.index')}}" class="nav__dropdown-item">Serviço</a>
                                     <a href="{{ route('usuario.index')}}" class="nav__dropdown-item">Usuário</a>
@@ -310,13 +295,13 @@
                         <div class="nav__dropdown">
                             <a href="#" class="nav__link">
                                 <i class='bx bx-bell nav__icon'></i>
-                                <span class="nav__name">Item 1</span>
+                                <span class="nav__name">Relatórios</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
+                                    <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
@@ -337,34 +322,109 @@
 
     <!--========== CONTENTS ==========-->
     <div class="container">
-        <form action="{{ route('tipo_servico.update', ['tipo_servico' => $tipo_servico->id]) }}" method="post">
+        <form action="{{ route('funcionario.store') }}" method="post">
             @csrf
-            @method('PUT')
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">Descrição do tipo de serviço:</label>
+                    <label for="subject">Nome do Funcionário:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="descricao" name="descricao"
-                        value="{{ $tipo_servico->descricao ?? old('descricao') }}">
-                    <p class="font-weight-bold text-danger mt-2">
-                        {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}</p>
+                    <input type="text" id="nome" value="{{ $funcionario->nome ?? old('nome') }}" name="nome">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('nome') ? $errors->first('nome') : ''}}</p>
+                </div>
+            </div>
+            <div class="col-75">
+                <select name="setor_id">
+                    <label for="subject">Setor:</label>
+                    <option> -- Selecione o Setor --</option>
+                        @foreach ($setores as $setor)
+                            <option value="{{ $setor->id}}">{{ $setor->descricao}}</option>
+                        @endforeach
+                </select>
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('setor_id') ? $errors->first('setor_id') : '' }}</p>
                 </div>
             </div>
             <div class="row">
-                <input type="submit" class="button-generic" value="Confirmar">
+                <div class="col-25">
+                    <label for="subject">CPF do Funcionário:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cpf" value="{{ $funcionario->cpf ?? old('cpf') }}" name="cpf">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('cpf') ? $errors->first('cpf') : ''}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">RG do Funcionário:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="rg" value="{{ $funcionario->rg ?? old('rg') }}" name="rg">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('rg') ? $errors->first('rg') : ''}}</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Data de nascimento do Funcionário:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="data_nascimento" value="{{ $funcionario->data_nascimento ?? old('data_nascimento') }}" name="data_nascimento">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : ''}}</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <input type="submit" class="button-generic" value="Cadastrar">
             </div>
         </form>
-
-        <div class="row centered">
-            <button class="button-generic button-return"
-                onclick="window.location='{{ url('app/tipo_servico') }}'">Voltar</button>
-        </div>
     </div>
+    <div class="container">
+        <table>
+            <caption>Funcionarios cadastrados</caption>
+            <thead>
+                <tr>
+                    <th scope="col" >Nome</th>
+                    <th scope="col" >Setor</th>
+                    <th scope="col" >CPF</th>
+                    <th scope="col" >RG</th>
+                    <th scope="col" >Data de Nascimento</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($funcionarios as $funcionario)
+
+                <tr>
+                    <td>{{$serfuncionariovico->nome}}</td>
+                    <td>{{$serfuncionariovico->setor_id}}</td>
+                    <td>{{$serfuncionariovico->cpf}}</td>
+                    <td>{{$serfuncionariovico->rg}}</td>
+                    <td>{{$serfuncionariovico->data_nascimento}}</td>
+                    <td><a class="green-text" href="{{ route('funcionario.edit', ['funcionario' => $funcionario->id])}}"><i class='bx bx-highlight nav__icon'></i> Editar</a></td>
+
+                    <td>
+                        <form id="form_{{$funcionario->id}}" method="post" action="{{ route('funcionario.destroy', ['funcionario' => $funcionario->id])}}">
+                            @method('DELETE')
+                            @csrf
+                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$funcionario->id}}').submit()"><i class='bx bx-trash-alt nav__icon'></i> Excluir</a>
+                        </form>
+                    </td>
+                </tr>
+
+                @endforeach
+            </tbody>
+        </table>
+
+
     </div>
 
     <!--========== SIDEBAR MAIN JS ==========-->
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('js/sidebar.js')}}"></script>
 </body>
 
 </html>
