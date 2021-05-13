@@ -31,4 +31,9 @@ Route::prefix('/app')->group(function () {
 
     //Auditoria
     Route::get('/audit', 'AuditController@show')->name('app.audit');
+
+    //Export Excel - CSV Audits
+    Route::get('/audit-export', 'AuditController@exportIntoExcel')->name('app.audit.excel');
+
+    //Route::get('/audit-csv', 'AuditController@exportIntoCSV')->name('app.audit.csv');
 });
