@@ -362,6 +362,11 @@
             <button style="margin-left: 10px;margin-bottom: 20px;" class="btn btn-green" type="submit">Buscar</button>
         </form>
 
+        <form action="{{ route('app.audit.excel') }}">
+            <p><b>Exportar Auditoria:</b></p>
+            <button style="margin-left: 10px;margin-bottom: 20px;" class="btn btn-green" type="submit">Exportar</button>
+        </form>
+
 
 
         <table>
