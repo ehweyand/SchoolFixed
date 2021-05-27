@@ -378,6 +378,59 @@
             </div>
 
             <div class="row">
+                <div class="col-25">
+                    <label for="subject">CEP:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cep" value="" name="cep">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Rua:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="rua" value="" name="rua">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Bairro</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="bairro" value="" name="bairro">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Cidade</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cidade" value="" name="cidade">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2"></p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">UF</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="uf" value="" name="uf">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2"></p>
+                </div>
+            </div>
+
+
+
+            <div class="row">
                 <input type="submit" class="button-generic" value="Cadastrar">
             </div>
         </form>
