@@ -478,7 +478,7 @@
 
                     <tr>
                         <td>{{ $funcionario->nome }}</td>
-                        <td>{{ $funcionario->setor_id }}</td>
+                        <td>{{$setores->find($funcionario->setor_id)->descricao}}</td>
                         <td>{{ $funcionario->cpf }}</td>
                         <td>{{ $funcionario->rg }}</td>
                         <td>{{ date('d/m/Y', strtotime($funcionario->data_nascimento))}}</td>

@@ -348,26 +348,28 @@
                     <p class="font-weight-bold text-danger mt-2">{{ $errors->has('nome') ? $errors->first('nome') : ''}}</p>
                 </div>
             </div>
+            
             <div class="col-75">
-                <select name="setor_id">
-                    <label for="subject">Setor:</label>
+                <label for="setor">Setor:</label>
+                <select name="setor_id" id="setor">
                     <option> -- Selecione o Setor --</option>
-                        @foreach ($setores as $setor)
-                            <option value="{{ $setor->id}}">{{ $setor->descricao}}</option>
-                        @endforeach
+                    @foreach ($setores as $setor)
+                        <option value="{{ $setor->id}}" {{ ($funcionario->setor_id ?? old ('setor_id')) == $setor->id ? 'selected' : ''}}>{{ $setor->descricao}}</option>
+                    @endforeach
                 </select>
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('setor_id') ? $errors->first('setor_id') : '' }}</p>
-                </div>
+                {{-- Mensagem de aviso --}}
+                <p class="font-weight-bold text-danger mt-2">
+                    {{ $errors->has('setor_id') ? $errors->first('setor_id') : '' }}</p>
             </div>
+
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">CPF do Funcionário:</label>
-                </div>
-                <div class="col-75">
+                    <label for="cpf">CPF do Funcionário:</label>
+
                     <input type="text" id="cpf" value="{{ $funcionario->cpf ?? old('cpf') }}" name="cpf">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('cpf') ? $errors->first('cpf') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">
+                        {{ $errors->has('cpf') ? $errors->first('cpf') : '' }}</p>
                 </div>
             </div>
             <div class="row">
