@@ -481,7 +481,7 @@
                         <td>{{ $funcionario->setor_id }}</td>
                         <td>{{ $funcionario->cpf }}</td>
                         <td>{{ $funcionario->rg }}</td>
-                        <td>{{ $funcionario->data_nascimento }}</td>
+                        <td>{{ date('d/m/Y', strtotime($funcionario->data_nascimento))}}</td>
                         <td><a class="green-text"
                                 href="{{ route('funcionario.edit', ['funcionario' => $funcionario->id]) }}"><i
                                     class='bx bx-highlight nav__icon'></i> Editar</a></td>
