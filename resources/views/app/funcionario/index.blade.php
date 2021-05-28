@@ -10,7 +10,9 @@
 
     <!--========== CSS ==========-->
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
+        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
+        crossorigin="anonymous" />
 
 
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
@@ -237,7 +239,34 @@
     td a:hover {
         text-decoration: underline;
     }
+
 </style>
+
+{{-- Comunicar com o webservice via ajax --}}
+<script>
+    function getDadosEnderecoPorCEP(cep) {
+        let url = 'https://viacep.com.br/ws/' + cep + '/json/unicode/'
+
+        let xmlHttp = new XMLHttpRequest()
+        xmlHttp.open('GET', url)
+
+        xmlHttp.onreadystatechange = () => {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                let dadosJSONText = xmlHttp.responseText
+                let dadosJSONObj = JSON.parse(dadosJSONText)
+
+                document.getElementById('endereco').value = dadosJSONObj.logradouro
+                document.getElementById('bairro').value = dadosJSONObj.bairro
+                document.getElementById('cidade').value = dadosJSONObj.localidade
+                document.getElementById('uf').value = dadosJSONObj.uf
+
+            }
+        }
+
+        xmlHttp.send()
+    }
+
+</script>
 
 <body>
     <!--========== HEADER ==========-->
@@ -279,11 +308,13 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
-                                    <a href="{{ route('funcionario.index')}}" class="nav__dropdown-item">Funcionário</a>
-                                    <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
-                                    <a href="{{ route('servico.index')}}" class="nav__dropdown-item">Serviço</a>
-                                    <a href="{{ route('usuario.index')}}" class="nav__dropdown-item">Usuário</a>
+                                    <a href="{{ route('setor.index') }}" class="nav__dropdown-item">Setor</a>
+                                    <a href="{{ route('funcionario.index') }}"
+                                        class="nav__dropdown-item">Funcionário</a>
+                                    <a href="{{ route('tipo_servico.index') }}" class="nav__dropdown-item">Tipo de
+                                        serviço</a>
+                                    <a href="{{ route('servico.index') }}" class="nav__dropdown-item">Serviço</a>
+                                    <a href="{{ route('usuario.index') }}" class="nav__dropdown-item">Usuário</a>
                                 </div>
                             </div>
                         </div>
@@ -301,7 +332,7 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
+                                    <a href="{{ route('app.logs') }}" class="nav__dropdown-item">Logs da aplicação</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
@@ -326,54 +357,60 @@
             @csrf
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">Nome do Funcionário:</label>
+                    <label for="nome">Nome do Funcionário:</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="nome" value="{{ $funcionario->nome ?? old('nome') }}" name="nome">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('nome') ? $errors->first('nome') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">
+                        {{ $errors->has('nome') ? $errors->first('nome') : '' }}</p>
                 </div>
             </div>
             <div class="col-75">
-                <select name="setor_id">
-                    <label for="subject">Setor:</label>
+                <label for="setor">Setor:</label>
+                <select name="setor_id" id="setor">
                     <option> -- Selecione o Setor --</option>
-                        @foreach ($setores as $setor)
-                            <option value="{{ $setor->id}}">{{ $setor->descricao}}</option>
-                        @endforeach
+                    @foreach ($setores as $setor)
+                        <option value="{{ $setor->id }}">{{ $setor->descricao }}</option>
+                    @endforeach
                 </select>
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('setor_id') ? $errors->first('setor_id') : '' }}</p>
-                </div>
+                {{-- Mensagem de aviso --}}
+                <p class="font-weight-bold text-danger mt-2">
+                    {{ $errors->has('setor_id') ? $errors->first('setor_id') : '' }}</p>
             </div>
+
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">CPF do Funcionário:</label>
-                </div>
-                <div class="col-75">
+                    <label for="cpf">CPF do Funcionário:</label>
+
                     <input type="text" id="cpf" value="{{ $funcionario->cpf ?? old('cpf') }}" name="cpf">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('cpf') ? $errors->first('cpf') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">
+                        {{ $errors->has('cpf') ? $errors->first('cpf') : '' }}</p>
+
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">RG do Funcionário:</label>
+                    <label for="rg">RG do Funcionário:</label>
                 </div>
                 <div class="col-75">
                     <input type="text" id="rg" value="{{ $funcionario->rg ?? old('rg') }}" name="rg">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('rg') ? $errors->first('rg') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('rg') ? $errors->first('rg') : '' }}
+                    </p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-25">
-                    <label for="subject">Data de nascimento do Funcionário:</label>
+                    <label for="data_nascimento">Data de nascimento do Funcionário:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="data_nascimento" value="{{ $funcionario->data_nascimento ?? old('data_nascimento') }}" name="data_nascimento">
+                    <input type="text" id="data_nascimento"
+                        value="{{ $funcionario->data_nascimento ?? old('data_nascimento') }}" name="data_nascimento">
                     {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : ''}}</p>
+                    <p class="font-weight-bold text-danger mt-2">
+                        {{ $errors->has('data_nascimento') ? $errors->first('data_nascimento') : '' }}</p>
                 </div>
             </div>
 
@@ -382,9 +419,7 @@
                     <label for="subject">CEP:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="cep" value="" name="cep">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2"></p>
+                    <input type="text" id="cep" value="" name="cep" onblur="getDadosEnderecoPorCEP(this.value)">
                 </div>
             </div>
             <div class="row">
@@ -392,9 +427,7 @@
                     <label for="subject">Rua:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="rua" value="" name="rua">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2"></p>
+                    <input type="text" id="endereco" value="" name="rua">
                 </div>
             </div>
             <div class="row">
@@ -403,8 +436,6 @@
                 </div>
                 <div class="col-75">
                     <input type="text" id="bairro" value="" name="bairro">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2"></p>
                 </div>
             </div>
             <div class="row">
@@ -413,8 +444,6 @@
                 </div>
                 <div class="col-75">
                     <input type="text" id="cidade" value="" name="cidade">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2"></p>
                 </div>
             </div>
             <div class="row">
@@ -423,13 +452,8 @@
                 </div>
                 <div class="col-75">
                     <input type="text" id="uf" value="" name="uf">
-                    {{-- Mensagem de aviso --}}
-                    <p class="font-weight-bold text-danger mt-2"></p>
                 </div>
             </div>
-
-
-
             <div class="row">
                 <input type="submit" class="button-generic" value="Cadastrar">
             </div>
@@ -437,14 +461,14 @@
     </div>
     <div class="container">
         <table>
-            <caption>Funcionarios cadastrados</caption>
+            <caption>Funcionários cadastrados</caption>
             <thead>
                 <tr>
-                    <th scope="col" >Nome</th>
-                    <th scope="col" >Setor</th>
-                    <th scope="col" >CPF</th>
-                    <th scope="col" >RG</th>
-                    <th scope="col" >Data de Nascimento</th>
+                    <th scope="col">Nome</th>
+                    <th scope="col">Setor</th>
+                    <th scope="col">CPF</th>
+                    <th scope="col">RG</th>
+                    <th scope="col">Data de Nascimento</th>
                     <th></th>
                     <th></th>
                 </tr>
@@ -452,22 +476,27 @@
             <tbody>
                 @foreach ($funcionarios as $funcionario)
 
-                <tr>
-                    <td>{{$serfuncionariovico->nome}}</td>
-                    <td>{{$serfuncionariovico->setor_id}}</td>
-                    <td>{{$serfuncionariovico->cpf}}</td>
-                    <td>{{$serfuncionariovico->rg}}</td>
-                    <td>{{$serfuncionariovico->data_nascimento}}</td>
-                    <td><a class="green-text" href="{{ route('funcionario.edit', ['funcionario' => $funcionario->id])}}"><i class='bx bx-highlight nav__icon'></i> Editar</a></td>
+                    <tr>
+                        <td>{{ $funcionario->nome }}</td>
+                        <td>{{ $funcionario->setor_id }}</td>
+                        <td>{{ $funcionario->cpf }}</td>
+                        <td>{{ $funcionario->rg }}</td>
+                        <td>{{ $funcionario->data_nascimento }}</td>
+                        <td><a class="green-text"
+                                href="{{ route('funcionario.edit', ['funcionario' => $funcionario->id]) }}"><i
+                                    class='bx bx-highlight nav__icon'></i> Editar</a></td>
 
-                    <td>
-                        <form id="form_{{$funcionario->id}}" method="post" action="{{ route('funcionario.destroy', ['funcionario' => $funcionario->id])}}">
-                            @method('DELETE')
-                            @csrf
-                            <a href="#" class="red-text" onclick="document.getElementById('form_{{$funcionario->id}}').submit()"><i class='bx bx-trash-alt nav__icon'></i> Excluir</a>
-                        </form>
-                    </td>
-                </tr>
+                        <td>
+                            <form id="form_{{ $funcionario->id }}" method="post"
+                                action="{{ route('funcionario.destroy', ['funcionario' => $funcionario->id]) }}">
+                                @method('DELETE')
+                                @csrf
+                                <a href="#" class="red-text"
+                                    onclick="document.getElementById('form_{{ $funcionario->id }}').submit()"><i
+                                        class='bx bx-trash-alt nav__icon'></i> Excluir</a>
+                            </form>
+                        </td>
+                    </tr>
 
                 @endforeach
             </tbody>
@@ -477,7 +506,7 @@
     </div>
 
     <!--========== SIDEBAR MAIN JS ==========-->
-    <script src="{{ asset('js/sidebar.js')}}"></script>
+    <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>
 
 </html>

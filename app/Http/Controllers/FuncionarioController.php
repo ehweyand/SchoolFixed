@@ -8,16 +8,14 @@ use Illuminate\Support\Facades\DB;
 use App\Setor;
 use App\Funcionario;
 
-class FuncionarioController extends Controller
-{
+class FuncionarioController extends Controller {
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
-        
+    public function index() {
+
         $funcionarios = Funcionario::all();
         $setores = Setor::all();
         return view('app.funcionario.index', ['funcionarios' => $funcionarios, 'setores' => $setores]);
@@ -28,10 +26,9 @@ class FuncionarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        $setores = Setor::all();
-        return view ('app.funcionario.create', ['setores' => $setores]);
+    public function create() {
+        // $setores = Setor::all();
+        // return view('app.funcionario.create', ['setores' => $setores]);
     }
 
     /**
@@ -40,8 +37,7 @@ class FuncionarioController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $regras = [
             'nome' => 'required|max:100',
             'setor_id' => 'exists:setores,id',
@@ -66,12 +62,23 @@ class FuncionarioController extends Controller
         $request->validate($regras, $feedback);
 
         //Transactions Control
+
         DB::beginTransaction();
         try {
-            Funcionario::create($request->all());
+            //Funcionario::create($request->all());
+            Funcionario::create([
+                'nome' => $request->get('nome'),
+                'setor_id' => $request->get('setor_id'),
+                'cpf' => $request->get('cpf'),
+                'rg' => $request->get('rg'),
+                'data_nascimento' => $request->get('data_nascimento')
+            ]);
+
+
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
+            
         }
 
         return redirect()->route('funcionario.index');
@@ -83,8 +90,7 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
-    {
+    public function show($id) {
         //
     }
 
@@ -94,8 +100,7 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(Funcionario $funcionario)
-    {
+    public function edit(Funcionario $funcionario) {
         $setores = Setor::all();
         return view('app.funcionario.edit', ['funcionario' => $funcionario, 'setores' => $setores]);
     }
@@ -107,8 +112,7 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
+    public function update(Request $request, Funcionario $funcionario) {
         $regras = [
             'nome' => 'required|max:100',
             'setor_id' => 'exists:setores,id',
@@ -139,10 +143,9 @@ class FuncionarioController extends Controller
             DB::commit();
         } catch (\Exception $exception) {
             DB::rollBack();
-        }      
+        }
 
         return redirect()->route('funcionario.index');
-        
     }
 
     /**
@@ -151,8 +154,7 @@ class FuncionarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy(Funcionario $funcionario) {
         $funcionario->delete();
         return redirect()->route('funcionario.index');
     }
