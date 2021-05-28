@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 
 use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 use App\Setor;
 use App\Funcionario;
 
@@ -66,12 +67,15 @@ class FuncionarioController extends Controller {
         DB::beginTransaction();
         try {
             //Funcionario::create($request->all());
+            $myDate = $request->get('data_nascimento');
+            $date = Carbon::createFromFormat('d/m/Y', $myDate)->format('Y-m-d');
+
             Funcionario::create([
                 'nome' => $request->get('nome'),
                 'setor_id' => $request->get('setor_id'),
                 'cpf' => $request->get('cpf'),
                 'rg' => $request->get('rg'),
-                'data_nascimento' => $request->get('data_nascimento')
+                'data_nascimento' => $date
             ]);
 
 
