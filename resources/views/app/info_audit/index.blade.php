@@ -307,13 +307,15 @@
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
-                            <div class="nav__dropdown-collapse">
-                                <div class="nav__dropdown-content">
+                            <div class="nav__dropdown-content">
                                     <a href="{{ route('setor.index') }}" class="nav__dropdown-item">Setor</a>
+                                    <a href="{{ route('funcionario.index') }}"
+                                        class="nav__dropdown-item">Funcionário</a>
+                                    <a href="{{ route('instituicao.index')}}" class="nav__dropdown-item">Instituição</a>
                                     <a href="{{ route('tipo_servico.index') }}" class="nav__dropdown-item">Tipo de
                                         serviço</a>
-                                    <a href="#" class="nav__dropdown-item">Usuário</a>
-                                </div>
+                                    <a href="{{ route('servico.index') }}" class="nav__dropdown-item">Serviço</a>
+                                    <a href="{{ route('usuario.index') }}" class="nav__dropdown-item">Usuário</a>
                             </div>
                         </div>
                     </div>

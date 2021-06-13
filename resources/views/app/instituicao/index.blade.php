@@ -14,6 +14,7 @@
         integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
         crossorigin="anonymous" />
 
+
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
 
     <title>Sistema SchoolFixed</title>
@@ -26,6 +27,7 @@
     textarea {
         width: 100%;
         padding: 12px;
+        border: 1px solid #ccc;
         border: 1px solid #ccc;
         border-radius: 4px;
         box-sizing: border-box;
@@ -47,7 +49,7 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
-        margin-top: 9px
+        margin-top: 9px;
     }
 
     /* Style the container */
@@ -85,7 +87,7 @@
         .col-75,
         input[type=submit] {
             width: 100%;
-            margin-top: 7px;
+            margin-top: 9px;
         }
     }
 
@@ -238,36 +240,33 @@
         text-decoration: underline;
     }
 
-    .btn {
-        font-family: arial;
-        font-size: 14px;
-        text-transform: uppercase;
-        font-weight: 700;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        display: inline-block;
-    }
-
-    .btn-green {
-        background: green;
-        color: #fff;
-        box-shadow: 0 5px 0 #006000;
-    }
-
-    .btn-green:hover {
-        background: #006000;
-        color: #fff;
-        box-shadow: 0 5px 0 #003f00;
-    }
-
-    .btn-green:active {
-        position: relative;
-        top: 5px;
-        box-shadow: none;
-    }
-
 </style>
+
+{{-- Comunicar com o webservice via ajax --}}
+<script>
+    function getDadosEnderecoPorCEP(cep) {
+        let url = 'https://viacep.com.br/ws/' + cep + '/json/unicode/'
+
+        let xmlHttp = new XMLHttpRequest()
+        xmlHttp.open('GET', url)
+
+        xmlHttp.onreadystatechange = () => {
+            if (xmlHttp.readyState == 4 && xmlHttp.status == 200) {
+                let dadosJSONText = xmlHttp.responseText
+                let dadosJSONObj = JSON.parse(dadosJSONText)
+
+                document.getElementById('endereco').value = dadosJSONObj.logradouro
+                document.getElementById('bairro').value = dadosJSONObj.bairro
+                document.getElementById('cidade').value = dadosJSONObj.localidade
+                document.getElementById('uf').value = dadosJSONObj.uf
+
+            }
+        }
+
+        xmlHttp.send()
+    }
+
+</script>
 
 <body>
     <!--========== HEADER ==========-->
@@ -307,11 +306,12 @@
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
+                            <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
                                     <a href="{{ route('setor.index') }}" class="nav__dropdown-item">Setor</a>
                                     <a href="{{ route('funcionario.index') }}"
                                         class="nav__dropdown-item">Funcionário</a>
-                                    <a href="{{ route('instituicao.index')}}" class="nav__dropdown-item">Instituição</a>
+                                    <a href="{{ route('instituicao.index') }}" class="nav__dropdown-item">Intituição</a>
                                     <a href="{{ route('tipo_servico.index') }}" class="nav__dropdown-item">Tipo de
                                         serviço</a>
                                     <a href="{{ route('servico.index') }}" class="nav__dropdown-item">Serviço</a>
@@ -327,13 +327,13 @@
                         <div class="nav__dropdown">
                             <a href="#" class="nav__link">
                                 <i class='bx bx-bell nav__icon'></i>
-                                <span class="nav__name">Item 1</span>
+                                <span class="nav__name">Relatórios</span>
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="#" class="nav__dropdown-item">SubItem 1.1</a>
+                                    <a href="{{ route('app.logs') }}" class="nav__dropdown-item">Logs da aplicação</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
@@ -353,25 +353,116 @@
     </div>
 
     <!--========== CONTENTS ==========-->
-    <h1>Visualização de Logs do sistema</h1>
-    {{-- Alterar a data do arquivo de log desejado --}}
-    <form action="{{ route('app.logs') }}">
-        <input type="date" name="date" value="{{ $date ? $date->format('Y-m-d') : today()->format('Y-m-d') }}">
-        <button style="margin-left: 10px;" class="btn btn-green" type="submit">Buscar</button>
-    </form>
+    <div class="container">
+        <form action="{{ route('instituicao.store') }}" method="post">
+            @csrf
+            <div class="row">
+                <div class="col-25">
+                    <label for="nome">Nome da Instituição:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="descricao" value="{{ $instituicao->descricao ?? old('descricao') }}" name="descricao">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">
+                        {{ $errors->has('descricao') ? $errors->first('descricao') : '' }}</p>
+                </div>
+            </div>
+            <div class="col-75">
+                <label for="setor">Usuário:</label>
+                <select name="setor_id" id="setor">
+                    <option> -- Selecione o Usuário --</option>
+                    @foreach ($usuarios as $usuario)
+                        <option value="{{ $usuario->id }}">{{ $usuario->nome }}</option>
+                    @endforeach
+                </select>
+                {{-- Mensagem de aviso --}}
+                <p class="font-weight-bold text-danger mt-2">
+                    {{ $errors->has('usuario_id') ? $errors->first('usuario_id') : '' }}</p>
+            </div>
 
-    {{-- Visualizar o arquivo de Log e os seus conteúdos --}}
-    @if (empty($data['file']))
-        <div>
-            <h3 style="padding-top: 10px;">Nenhum Log foi encontrado.</h3>
-        </div>
-    @else
-        <div>
-            <h5>Atualizado em: <b>{{ $data['lastModified']->format('d-m-Y h:i a') }}</b></h5>
-            <h5>Tamanho do arquivo: <b>{{ round($data['size'] / 1024) }} KB</b></h5>
-            <pre> {{ $data['file'] }}</pre>
-        </div>
-    @endif
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">CEP:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cep" value="" name="cep" onblur="getDadosEnderecoPorCEP(this.value)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Rua:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="endereco" value="" name="rua">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Bairro</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="bairro" value="" name="bairro">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Cidade</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cidade" value="" name="cidade">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">UF</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="uf" value="" name="uf">
+                </div>
+            </div>
+            <div class="row">
+                <input type="submit" class="button-generic" value="Cadastrar">
+            </div>
+        </form>
+    </div>
+    <div class="container">
+        <table>
+            <caption>Instituições cadastradas</caption>
+            <thead>
+                <tr>
+                    <th scope="col">Nome</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($instituicoes as $instituicao)
+
+                    <tr>
+                        <td>{{ $instituicao->descricao }}</td>
+                        <td><a class="green-text"
+                                href="{{ route('funcionario.edit', ['funcionario' => $funcionario->id]) }}"><i
+                                    class='bx bx-highlight nav__icon'></i> Editar</a></td>
+
+                        <td>
+                            <form id="form_{{ $funcionario->id }}" method="post"
+                                action="{{ route('funcionario.destroy', ['funcionario' => $funcionario->id]) }}">
+                                @method('DELETE')
+                                @csrf
+                                <a href="#" class="red-text"
+                                    onclick="document.getElementById('form_{{ $funcionario->id }}').submit()"><i
+                                        class='bx bx-trash-alt nav__icon'></i> Excluir</a>
+                            </form>
+                        </td>
+                    </tr>
+
+                @endforeach
+            </tbody>
+        </table>
+
+
+    </div>
+
     <!--========== SIDEBAR MAIN JS ==========-->
     <script src="{{ asset('js/sidebar.js') }}"></script>
 </body>

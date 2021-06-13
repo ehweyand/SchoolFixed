@@ -29,6 +29,9 @@ Route::prefix('/app')->group(function () {
     //Usuario
     Route::resource('usuario', 'UsuarioController');
 
+    //Instituicao
+    Route::resource('instituicao', 'InstituicaoController');
+
     //Logs
     Route::get('/logs', 'LogsController@show')->name('app.logs');
 

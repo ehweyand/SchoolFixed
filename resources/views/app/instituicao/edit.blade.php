@@ -10,9 +10,8 @@
 
     <!--========== CSS ==========-->
     <link rel="stylesheet" href="{{ asset('css/sidebar.css') }}">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"
-        integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w=="
-        crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" integrity="sha512-HK5fgLBL+xu6dm/Ii3z4xhlSUyZgTT9tuc/hSrtw6uzJOvgRr2a9jyxxT1ely+B+xFAmJKVSTbpM/CuL7qxO8w==" crossorigin="anonymous" />
+
 
     <link rel="icon" href="{{ asset('img/favicon.ico') }}">
 
@@ -47,7 +46,6 @@
         border-radius: 4px;
         cursor: pointer;
         float: right;
-        margin-top: 9px
     }
 
     /* Style the container */
@@ -83,9 +81,14 @@
 
         .col-25,
         .col-75,
-        input[type=submit] {
+        input[type=submit],
+        button.button-generic {
             width: 100%;
-            margin-top: 7px;
+            margin-top: 8px;
+        }
+
+        .button-return {
+            margin: 0 !important;
         }
     }
 
@@ -220,6 +223,10 @@
         }
     }
 
+    .button-return {
+        margin-right: 15px;
+    }
+
     .red-text {
         color: red;
         font-weight: bold;
@@ -238,33 +245,9 @@
         text-decoration: underline;
     }
 
-    .btn {
-        font-family: arial;
-        font-size: 14px;
-        text-transform: uppercase;
-        font-weight: 700;
-        border: none;
-        padding: 10px;
-        cursor: pointer;
-        display: inline-block;
-    }
-
-    .btn-green {
-        background: green;
-        color: #fff;
-        box-shadow: 0 5px 0 #006000;
-    }
-
-    .btn-green:hover {
-        background: #006000;
-        color: #fff;
-        box-shadow: 0 5px 0 #003f00;
-    }
-
-    .btn-green:active {
-        position: relative;
-        top: 5px;
-        box-shadow: none;
+    .centered {
+        display: flex;
+        justify-content: center;
     }
 
 </style>
@@ -307,15 +290,14 @@
                                 <i class='bx bx-chevron-down nav__icon nav__dropdown-icon'></i>
                             </a>
 
+                            <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="{{ route('setor.index') }}" class="nav__dropdown-item">Setor</a>
-                                    <a href="{{ route('funcionario.index') }}"
-                                        class="nav__dropdown-item">Funcionário</a>
+                                    <a href="{{ route('setor.index')}}" class="nav__dropdown-item">Setor</a>
+                                    <a href="{{ route('funcionario.index')}}" class="nav__dropdown-item">Funcionário</a>
                                     <a href="{{ route('instituicao.index')}}" class="nav__dropdown-item">Instituição</a>
-                                    <a href="{{ route('tipo_servico.index') }}" class="nav__dropdown-item">Tipo de
-                                        serviço</a>
-                                    <a href="{{ route('servico.index') }}" class="nav__dropdown-item">Serviço</a>
-                                    <a href="{{ route('usuario.index') }}" class="nav__dropdown-item">Usuário</a>
+                                    <a href="{{ route('tipo_servico.index')}}" class="nav__dropdown-item">Tipo de serviço</a>
+                                    <a href="{{ route('servico.index')}}" class="nav__dropdown-item">Serviço</a>
+                                    <a href="{{ route('usuario.index')}}" class="nav__dropdown-item">Usuário</a>
                                 </div>
                             </div>
                         </div>
@@ -333,7 +315,7 @@
 
                             <div class="nav__dropdown-collapse">
                                 <div class="nav__dropdown-content">
-                                    <a href="#" class="nav__dropdown-item">SubItem 1.1</a>
+                                <a href="{{ route('app.logs')}}" class="nav__dropdown-item">Logs da aplicação</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.2</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.3</a>
                                     <a href="#" class="nav__dropdown-item">SubItem 1.4</a>
@@ -353,27 +335,86 @@
     </div>
 
     <!--========== CONTENTS ==========-->
-    <h1>Visualização de Logs do sistema</h1>
-    {{-- Alterar a data do arquivo de log desejado --}}
-    <form action="{{ route('app.logs') }}">
-        <input type="date" name="date" value="{{ $date ? $date->format('Y-m-d') : today()->format('Y-m-d') }}">
-        <button style="margin-left: 10px;" class="btn btn-green" type="submit">Buscar</button>
-    </form>
+    <div class="container">
+        <form action="{{ route('instituicao.update', ['instituicao' => $instituicao->id]) }}" method="post">
+            @csrf
+            @method('PUT')
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Nome da Instituição:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="descricao" value="{{ $instituicao->descricao ?? old('descricao') }}" name="descricao">
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">{{ $errors->has('descricao') ? $errors->first('descricao') : ''}}</p>
+                </div>
+            </div>
+            
+            <div class="col-75">
+                <label for="setor">Usuário:</label>
+                <select name="setor_id" id="setor">
+                    <option> -- Selecione o Usuário --</option>
+                    @foreach ($usuarios as $usuario)
+                        <option value="{{ $usuario->id}}" {{ ($instituicao->usuario_id ?? old ('usuario_id')) == $usuario->id ? 'selected' : ''}}>{{ $usuario->nome}}</option>
+                    @endforeach
+                </select>
+                {{-- Mensagem de aviso --}}
+                <p class="font-weight-bold text-danger mt-2">
+                    {{ $errors->has('usuario_id') ? $errors->first('usuario_id') : '' }}</p>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">CEP:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cep" value="" name="cep" onblur="getDadosEnderecoPorCEP(this.value)">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Rua:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="endereco" value="" name="rua">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Bairro</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="bairro" value="" name="bairro">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Cidade</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="cidade" value="" name="cidade">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">UF</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="uf" value="" name="uf">
+                </div>
+            </div>
+>
+            <div class="row">
+                <input type="submit" class="button-generic" value="Confirmar">
+            </div>
+        </form>
+        <div class="row centered">
+            <button class="button-generic button-return" onclick="window.location='{{ url('app/instituicao') }}'">Voltar</button>
+        </div>
+    </div>
+  
 
-    {{-- Visualizar o arquivo de Log e os seus conteúdos --}}
-    @if (empty($data['file']))
-        <div>
-            <h3 style="padding-top: 10px;">Nenhum Log foi encontrado.</h3>
-        </div>
-    @else
-        <div>
-            <h5>Atualizado em: <b>{{ $data['lastModified']->format('d-m-Y h:i a') }}</b></h5>
-            <h5>Tamanho do arquivo: <b>{{ round($data['size'] / 1024) }} KB</b></h5>
-            <pre> {{ $data['file'] }}</pre>
-        </div>
-    @endif
     <!--========== SIDEBAR MAIN JS ==========-->
-    <script src="{{ asset('js/sidebar.js') }}"></script>
+    <script src="{{ asset('js/sidebar.js')}}"></script>
 </body>
 
 </html>
