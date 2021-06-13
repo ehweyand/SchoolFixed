@@ -32,6 +32,9 @@ Route::prefix('/app')->group(function () {
     //Instituicao
     Route::resource('instituicao', 'InstituicaoController');
 
+    //Ordem de Servico
+    Route::resource('ordem_servico', 'OrdemServicoController');
+
     //Logs
     Route::get('/logs', 'LogsController@show')->name('app.logs');
 

@@ -368,8 +368,8 @@
                 </div>
             </div>
             <div class="col-75">
-                <label for="setor">Usuário:</label>
-                <select name="setor_id" id="setor">
+                <label for="usuario">Usuário:</label>
+                <select name="usuario_id" id="usuario">
                     <option> -- Selecione o Usuário --</option>
                     @foreach ($usuarios as $usuario)
                         <option value="{{ $usuario->id }}">{{ $usuario->nome }}</option>
@@ -441,16 +441,16 @@
                     <tr>
                         <td>{{ $instituicao->descricao }}</td>
                         <td><a class="green-text"
-                                href="{{ route('funcionario.edit', ['funcionario' => $funcionario->id]) }}"><i
+                                href="{{ route('instituicao.edit', ['instituicao' => $instituicao->id]) }}"><i
                                     class='bx bx-highlight nav__icon'></i> Editar</a></td>
 
                         <td>
-                            <form id="form_{{ $funcionario->id }}" method="post"
-                                action="{{ route('funcionario.destroy', ['funcionario' => $funcionario->id]) }}">
+                            <form id="form_{{ $instituicao->id }}" method="post"
+                                action="{{ route('instituicao.destroy', ['instituicao' => $instituicao->id]) }}">
                                 @method('DELETE')
                                 @csrf
                                 <a href="#" class="red-text"
-                                    onclick="document.getElementById('form_{{ $funcionario->id }}').submit()"><i
+                                    onclick="document.getElementById('form_{{ $instituicao->id }}').submit()"><i
                                         class='bx bx-trash-alt nav__icon'></i> Excluir</a>
                             </form>
                         </td>

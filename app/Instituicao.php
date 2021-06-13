@@ -12,5 +12,5 @@ class Instituicao extends Model
 
     protected $table = 'instituicoes';
     protected $fillable = ['descricao', 'endereco_id', 'usuario_id'];
-}
+
 }

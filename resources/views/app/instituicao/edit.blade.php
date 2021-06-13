@@ -351,8 +351,8 @@
             </div>
             
             <div class="col-75">
-                <label for="setor">Usuário:</label>
-                <select name="setor_id" id="setor">
+                <label for="usuario">Usuário:</label>
+                <select name="usuario_id" id="usuario">
                     <option> -- Selecione o Usuário --</option>
                     @foreach ($usuarios as $usuario)
                         <option value="{{ $usuario->id}}" {{ ($instituicao->usuario_id ?? old ('usuario_id')) == $usuario->id ? 'selected' : ''}}>{{ $usuario->nome}}</option>
