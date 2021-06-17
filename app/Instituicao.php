@@ -3,14 +3,17 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use OwenIt\Auditing\Contracts\Auditable;
+
 
 class Instituicao extends Model
 {
     //
-    use \OwenIt\Auditing\Auditable;
+    protected $table = 'instituicoes'; 
+    protected $fillable = ['descricao', 'cep', 'logradouro', 'complemento', 'bairro', 'uf', 'user_id']; 
 
-    protected $table = 'instituicoes';
-    protected $fillable = ['descricao', 'endereco_id', 'usuario_id'];
+    public function usuarios (){
+        return $this->hasOne('App\User');
+    }
+ 
 
 }

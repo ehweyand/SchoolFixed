@@ -369,7 +369,7 @@
             </div>
             <div class="col-75">
                 <label for="usuario">Usuário:</label>
-                <select name="usuario_id" id="usuario">
+                <select name="user_id" id="user_id">
                     <option> -- Selecione o Usuário --</option>
                     @foreach ($usuarios as $usuario)
                         <option value="{{ $usuario->id }}">{{ $usuario->nome }}</option>
@@ -385,7 +385,7 @@
                     <label for="subject">CEP:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="cep" value="" name="cep" onblur="getDadosEnderecoPorCEP(this.value)">
+                    <input type="text" id="cep" value="{{ $instituicao->cep ?? old('cep') }}" name="cep" onblur="getDadosEnderecoPorCEP(this.value)">
                 </div>
             </div>
             <div class="row">
@@ -393,7 +393,15 @@
                     <label for="subject">Rua:</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="endereco" value="" name="rua">
+                    <input type="text" id="logradouro" value="{{ $instituicao->logradouro ?? old('logradouro') }}" name="logradouro">
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="subject">Complemento:</label>
+                </div>
+                <div class="col-75">
+                    <input type="text" id="complemento" value="{{ $instituicao->complemento ?? old('complemento') }}" name="complemento">
                 </div>
             </div>
             <div class="row">
@@ -401,7 +409,7 @@
                     <label for="subject">Bairro</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="bairro" value="" name="bairro">
+                    <input type="text" id="bairro" value="{{ $instituicao->bairro ?? old('bairro') }}" name="bairro">
                 </div>
             </div>
             <div class="row">
@@ -409,7 +417,7 @@
                     <label for="subject">Cidade</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="cidade" value="" name="cidade">
+                    <input type="text" id="cidade" value="{{ $instituicao->cidade ?? old('cidade') }}" name="cidade">
                 </div>
             </div>
             <div class="row">
@@ -417,12 +425,12 @@
                     <label for="subject">UF</label>
                 </div>
                 <div class="col-75">
-                    <input type="text" id="uf" value="" name="uf">
+                    <input type="text" id="uf" value="{{ $instituicao->uf ?? old('uf') }}" name="uf">
                 </div>
             </div>
             <div class="row">
                 <input type="submit" class="button-generic" value="Cadastrar">
-            </div>
+            </div> 
         </form>
     </div>
     <div class="container">
@@ -436,7 +444,7 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach ($instituicoes as $instituicao)
+                @foreach ($instituicoes as $instituicao) 
 
                     <tr>
                         <td>{{ $instituicao->descricao }}</td>
