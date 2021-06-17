@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrdemServico extends Model
 {
-    use \OwenIt\Auditing\Auditable;
+
 
     protected $table = 'ordem_servicos';
-    protected $fillable = ['descricao', 'valor', 'instituicao_id'];
+    protected $fillable = ['servico_id','descricao', 'valor', 'instituicao_id'];
 }

@@ -374,6 +374,11 @@
                 <p class="font-weight-bold text-danger mt-2">
                     {{ $errors->has('instiruicao_id') ? $errors->first('instituicao_id') : '' }}</p>
             </div>
+            <div class="row">
+                <input type="submit" class="button-generic" value="Cadastrar">
+            </div> 
+            </form>
+    </div>
 
     <div class="container">
         <table>

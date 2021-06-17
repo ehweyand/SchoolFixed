@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+
+use Illuminate\Support\Facades\DB;
 use App\OrdemServico;
+use App\Servico;
+use App\Instituicao;
 use Illuminate\Http\Request;
 
 class OrdemServicoController extends Controller
@@ -14,7 +18,11 @@ class OrdemServicoController extends Controller
      */
     public function index()
     {
-        //
+        $ordem_servicos = OrdemServico::all();
+        $servicos = Servico::all();
+        $instituicoes = Instituicao::all();
+        
+        return view('app.ordem_servico.index', ['ordem_servicos' => $ordem_servicos, 'servicos' => $servicos, 'instituicoes' => $instituicoes]);
     }
 
     /**
@@ -24,7 +32,9 @@ class OrdemServicoController extends Controller
      */
     public function create()
     {
-        //
+        $servicos = Servico::all();
+        $instituicoes = Instituicao::all();
+        return view ('app.ordem_servico.create', ['servicos' => $servicos, 'instituicoes' => $instituicoes]);
     }
 
     /**
@@ -35,7 +45,32 @@ class OrdemServicoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $regras = [ 
+            'servico_id' => 'exists:servicos,id',
+            'descricao' => 'required',
+            'valor' => 'required',
+            'instituicao_id' => 'exists:instituicoes,id'
+        ];
+
+        $feedback = [
+            'servico_id.exists' => 'O serviço não existe',
+            'descricao.required' => 'O campo descrição deve ser preenchido',
+            'valor.required' => 'O campo valor deve ser preenchido',
+            'instituicao_id.exists' => 'O instituição não existe'
+        ];
+
+        $request->validate($regras, $feedback);
+
+        //Transactions Control
+        DB::beginTransaction();
+        try {
+            ordemServico::create($request->all());
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+
+        return redirect()->route('ordem_servico.index');
     }
 
     /**
@@ -57,7 +92,11 @@ class OrdemServicoController extends Controller
      */
     public function edit(OrdemServico $ordemServico)
     {
-        //
+        $servicos = Servico::all();
+        $instituicoes = Instituicao::all();
+        
+        return view('app.ordem_servico.edit', ['ordemServico' => $ordemServico, 'servicos' => $servicos, 'instituicoes' => $instituicoes]);
+        
     }
 
     /**
@@ -69,7 +108,30 @@ class OrdemServicoController extends Controller
      */
     public function update(Request $request, OrdemServico $ordemServico)
     {
-        //
+        $regras = [ 
+            'servico_id' => 'exists:servicos,id',
+            'descricao' => 'required',
+            'valor' => 'required',
+            'instituicao_id' => 'exists:instituicoes,id'
+        ];
+
+        $feedback = [
+            'servico_id.exists' => 'O serviço não existe',
+            'descricao.required' => 'O campo descrição deve ser preenchido',
+            'valor.required' => 'O campo valor deve ser preenchido',
+            'instituicao_id.exists' => 'O instituição não existe'
+        ];
+        $request->validate($regras, $feedback);
+
+        //Transactions Control
+        DB::beginTransaction();
+        try {
+            $ordemServico->update($request->all());
+            DB::commit();
+        } catch (\Exception $exception) {
+            DB::rollBack();
+        }
+        return redirect()->route('ordem_servico.index');
     }
 
     /**
@@ -80,6 +142,7 @@ class OrdemServicoController extends Controller
      */
     public function destroy(OrdemServico $ordemServico)
     {
-        //
+        $ordemServico->delete();
+        return redirect()->route('ordem_servico.index');
     }
 }
