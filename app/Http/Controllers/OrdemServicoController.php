@@ -95,7 +95,7 @@ class OrdemServicoController extends Controller
         $servicos = Servico::all();
         $instituicoes = Instituicao::all();
         
-        return view('app.ordem_servico.edit', ['ordemServico' => $ordemServico, 'servicos' => $servicos, 'instituicoes' => $instituicoes]);
+        return view('app.ordem_servico.edit', ['ordem_servico' => $ordemServico, 'servicos' => $servicos, 'instituicoes' => $instituicoes]);
         
     }
 

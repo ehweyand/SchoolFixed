@@ -345,11 +345,11 @@
                 <select name="servico_id" id="servico">
                     <option> -- Selecione o Serviço --</option>
                     @foreach ($servicos as $servico)
-                        <option value="{{ $servico->id }}">{{ $servico->descricao }}</option>
+                        <option value="{{ $servico->id}} "{{ ($ordem_servico->servico_id ?? old ('servico_id')) == $servico->id ? 'selected' : ''}}>{{ $servico->descricao}}</option>
                     @endforeach
                 </select>
                 {{-- Mensagem de aviso --}}
-                <p class="font-weight-bold text-danger mt-2">
+                <p class="font-weight-bold text-danger mt-2>
                     {{ $errors->has('servico_id') ? $errors->first('servico_id') : '' }}</p>
             </div>
             <div class="row">
@@ -379,7 +379,7 @@
                 <select name="instituicao_id" id="instituicao">
                     <option> -- Selecione a Instituicao --</option>
                     @foreach ($instituicoes as $instituicao)
-                        <option value="{{ $instituicao->id }}">{{ $instituicao->descricao }}</option>
+                        <option value="{{ $instituicao->id}}" {{ ($ordem_servico->instituicao_id ?? old ('instituicao_id')) == $instituicao->id ? 'selected' : ''}}>{{ $instituicao->descricao}}</option>
                     @endforeach
                 </select>
                 {{-- Mensagem de aviso --}}
