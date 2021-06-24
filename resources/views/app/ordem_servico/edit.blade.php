@@ -373,7 +373,7 @@
                     <label for="nome">Valor:</label>
                 </div>
                 <div class="col-75">
-                    <input  type="text" id="valor" value="{{ $ordem_servico->valor ?? old('valor') }}" name="valor">
+                    <input  type="texte" id="valor" value="{{ $ordem_servico->valor ?? old('valor') }}" name="valor">
                     {{-- Mensagem de aviso --}}
                     <p class="font-weight-bold text-danger mt-2">
                         {{ $errors->has('valor') ? $errors->first('valor') : '' }}</p>
