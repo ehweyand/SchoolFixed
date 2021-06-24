@@ -328,18 +328,22 @@
     <div class="container">
         <form action="{{ route('ordem_servico.store') }}" method="post">
             @csrf
-            <div class="col-75">
-                <label for="servico">Serviço:</label>
-                <select name="servico_id" id="servico">
-                    <option> -- Selecione o Serviço --</option>
-                    @foreach ($servicos as $servico)
-                        <option value="{{ $servico->id }}">{{ $servico->descricao }}</option>
-                    @endforeach
-                </select>
-                {{-- Mensagem de aviso --}}
-                <p class="font-weight-bold text-danger mt-2">
-                    {{ $errors->has('servico_id') ? $errors->first('servico_id') : '' }}</p>
-            </div>
+            <div class="row">
+                <div class="col-25">
+                    <label for="servico">Serviço:</label>
+                </div>
+                <div class="col-75">    
+                    <select name="servico_id" id="servico">
+                        <option> -- Selecione o Serviço --</option>
+                        @foreach ($servicos as $servico)
+                            <option value="{{ $servico->id }}">{{ $servico->descricao }}</option>
+                        @endforeach
+                    </select>
+                    {{-- Mensagem de aviso --}}
+                    <p class="font-weight-bold text-danger mt-2">
+                        {{ $errors->has('servico_id') ? $errors->first('servico_id') : '' }}</p>
+                </div>
+            </div>    
             <div class="row">
                 <div class="col-25">
                     <label for="nome">Descricao:</label>
@@ -356,14 +360,17 @@
                     <label for="nome">Valor:</label>
                 </div>
                 <div class="col-75">
-                    <input type="decimal" id="valor" value="{{ $ordem_servico->valor ?? old('valor') }}" name="valor">
+                    <input type="text" id="valor" value="{{ $ordem_servico->valor ?? old('valor') }}" name="valor">
                     {{-- Mensagem de aviso --}}
                     <p class="font-weight-bold text-danger mt-2">
                         {{ $errors->has('valor') ? $errors->first('valor') : '' }}</p>
                 </div>
             </div>
-            <div class="col-75">
-                <label for="instituicao">Instituição:</label>
+            <div class="row">
+                <div class="col-25">
+                    <label for="instituicao">Instituição:</label>
+                </div>
+                <div class="col-75">
                 <select name="instituicao_id" id="instituicao">
                     <option> -- Selecione a Instituicao --</option>
                     @foreach ($instituicoes as $instituicao)
@@ -373,6 +380,7 @@
                 {{-- Mensagem de aviso --}}
                 <p class="font-weight-bold text-danger mt-2">
                     {{ $errors->has('instiruicao_id') ? $errors->first('instituicao_id') : '' }}</p>
+                </div>    
             </div>
             <div class="row">
                 <input type="submit" class="button-generic" value="Cadastrar">
