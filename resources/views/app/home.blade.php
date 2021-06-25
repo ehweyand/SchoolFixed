@@ -99,7 +99,15 @@
     <!--========== CONTENTS ==========-->
     <main>
         <section>
-        {{-- Conteúdo --}}
+        <h1>Informações de sensores</h1>
+        <h3>Escola XYZ</h3>
+        <h4>Sensor de distância - Movimentação em entrada de depósito de materiais</h4>
+        <div class="chart-sensor">
+            <iframe width="450" height="260" style="border: 1px solid #cccccc;" src="https://thingspeak.com/channels/1056351/charts/1?bgcolor=%23ffffff&color=%23d62020&dynamic=true&results=60&type=line&update=15"></iframe>
+
+
+        </div>
+
         </section>
     </main>
 
